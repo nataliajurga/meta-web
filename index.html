@@ -6,296 +6,124 @@
 <title>Natalia's Meta-Web</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #faf9f7; --bg2: #f2f0ec; --text: #2c2c2a; --text2: #5f5e5a; --text3: #888780;
+  --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
+  --c-intuition: #534AB7; --c-concept: #0F6E56; --c-question: #993C1D; --c-paper: #993556; --c-person: #5F5E5A;
+  --l-intuition: #EEEDFE; --l-concept: #E1F5EE; --l-question: #FAECE7; --l-paper: #FBEAF0; --l-person: #F1EFE8;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #1c1c1a; --bg2: #252523; --text: #e8e6e0; --text2: #b4b2a9; --text3: #888780;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
+  --c-intuition: #AFA9EC; --c-concept: #5DCAA5; --c-question: #F0997B; --c-paper: #ED93B1; --c-person: #B4B2A9;
+  --l-intuition: #26215C; --l-concept: #04342C; --l-question: #4A1B0C; --l-paper: #4B1528; --l-person: #2C2C2A;
+}}
+html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; overflow: hidden; }
 
-  :root {
-    --bg: #faf9f7;
-    --bg2: #f2f0ec;
-    --text: #2c2c2a;
-    --text2: #5f5e5a;
-    --text3: #888780;
-    --border: rgba(0,0,0,0.1);
-    --border2: rgba(0,0,0,0.18);
-    --intuition: #534AB7;
-    --intuition-light: #EEEDFE;
-    --intuition-mid: #AFA9EC;
-    --concept: #0F6E56;
-    --concept-light: #E1F5EE;
-    --concept-mid: #5DCAA5;
-    --question: #993C1D;
-    --question-light: #FAECE7;
-    --question-mid: #F0997B;
-    --paper: #993556;
-    --paper-light: #FBEAF0;
-    --paper-mid: #ED93B1;
-    --person: #5F5E5A;
-    --person-light: #F1EFE8;
-    --person-mid: #B4B2A9;
-    --edge-high: rgba(0,0,0,0.35);
-    --edge-med: rgba(0,0,0,0.18);
-    --edge-spec: rgba(0,0,0,0.09);
-    --radius: 8px;
-    --panel: 300px;
-  }
+#app { display: flex; width: 100%; height: 100%; }
+#canvas { flex: 1; position: relative; overflow: hidden; }
+svg#graph { width: 100%; height: 100%; display: block; cursor: grab; }
+svg#graph:active { cursor: grabbing; }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1c1a;
-      --bg2: #252523;
-      --text: #e8e6e0;
-      --text2: #b4b2a9;
-      --text3: #888780;
-      --border: rgba(255,255,255,0.08);
-      --border2: rgba(255,255,255,0.14);
-      --intuition: #AFA9EC;
-      --intuition-light: #26215C;
-      --intuition-mid: #7F77DD;
-      --concept: #5DCAA5;
-      --concept-light: #04342C;
-      --concept-mid: #1D9E75;
-      --question: #F0997B;
-      --question-light: #4A1B0C;
-      --question-mid: #D85A30;
-      --paper: #ED93B1;
-      --paper-light: #4B1528;
-      --paper-mid: #D4537E;
-      --person: #B4B2A9;
-      --person-light: #2C2C2A;
-      --person-mid: #888780;
-      --edge-high: rgba(255,255,255,0.3);
-      --edge-med: rgba(255,255,255,0.14);
-      --edge-spec: rgba(255,255,255,0.06);
-    }
-  }
+.node-g { cursor: pointer; }
+.node-g circle { transition: r 0.2s; }
+.node-g text { pointer-events: none; user-select: none; fill: var(--text); }
+.edge-line { fill: none; }
 
-  html, body {
-    width: 100%; height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow: hidden;
-  }
+/* depth hint ring — pulses on depth-0 nodes to invite zoom */
+@keyframes pulse-ring {
+  0%   { r: 22px; opacity: 0.4; }
+  70%  { r: 34px; opacity: 0; }
+  100% { r: 34px; opacity: 0; }
+}
+.pulse-ring { animation: pulse-ring 2.8s ease-out infinite; fill: none; }
 
-  #app { display: flex; width: 100%; height: 100%; }
+/* LOD zoom hint banner */
+#zoom-hint {
+  position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 20px; padding: 6px 14px; font-size: 11px; color: var(--text3);
+  pointer-events: none; transition: opacity 0.4s; white-space: nowrap;
+}
+#zoom-hint.hidden { opacity: 0; }
 
-  /* ── Canvas ── */
-  #canvas { flex: 1; position: relative; }
-  svg#graph { width: 100%; height: 100%; display: block; }
+/* depth indicator */
+#depth-indicator {
+  position: absolute; top: 12px; right: 16px;
+  display: flex; gap: 6px; align-items: center;
+}
+.depth-pip {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border2); transition: background 0.3s, transform 0.3s;
+}
+.depth-pip.active { transform: scale(1.4); }
+.depth-pip[data-d="0"].active { background: var(--c-intuition); }
+.depth-pip[data-d="1"].active { background: var(--c-concept); }
+.depth-pip[data-d="2"].active { background: var(--c-question); }
 
-  /* ── Nodes ── */
-  .node circle {
-    stroke-width: 1.5;
-    cursor: pointer;
-    transition: r 0.15s, opacity 0.2s;
-  }
-  .node:hover circle { opacity: 0.85; }
-  .node text {
-    font-size: 12px;
-    fill: var(--text);
-    pointer-events: none;
-    user-select: none;
-  }
-  .node.dimmed circle { opacity: 0.2; }
-  .node.dimmed text { opacity: 0.15; }
+/* side panel */
+#panel {
+  width: 270px; height: 100%; background: var(--bg2);
+  border-left: 1px solid var(--border); display: flex; flex-direction: column;
+  overflow: hidden; transition: width 0.22s ease; flex-shrink: 0;
+}
+#panel.collapsed { width: 0; border: none; }
+#panel-header { padding: 16px 16px 10px; border-bottom: 1px solid var(--border); position: relative; }
+#panel-badge {
+  display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.07em;
+  text-transform: uppercase; padding: 2px 7px; border-radius: 3px; margin-bottom: 5px;
+}
+#panel-depth-label { font-size: 9px; color: var(--text3); margin-bottom: 4px; }
+#panel-label { font-size: 14px; font-weight: 500; line-height: 1.3; color: var(--text); }
+#panel-close {
+  position: absolute; top: 12px; right: 10px;
+  background: none; border: none; cursor: pointer; color: var(--text3); font-size: 18px; line-height: 1;
+}
+#panel-close:hover { color: var(--text); }
+#panel-body { flex: 1; overflow-y: auto; padding: 14px 16px 24px; }
+.psec { margin-bottom: 16px; }
+.psec-title { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.pdesc { font-size: 12px; line-height: 1.6; color: var(--text2); }
+.conn-item {
+  display: flex; align-items: flex-start; gap: 7px; padding: 6px 8px;
+  border-radius: 5px; border: 1px solid var(--border); background: var(--bg);
+  margin-bottom: 5px; cursor: pointer; transition: border-color 0.12s;
+}
+.conn-item:hover { border-color: var(--border2); }
+.conn-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.conn-label { font-size: 11px; color: var(--text); font-weight: 500; }
+.conn-rel { font-size: 10px; color: var(--text3); margin-top: 1px; }
+.conn-hint { font-size: 10px; color: var(--text3); font-style: italic; margin-top: 2px; }
 
-  /* ── Edges ── */
-  .edge {
-    fill: none;
-    stroke-width: 1.5;
-    transition: opacity 0.2s;
-  }
-  .edge.dimmed { opacity: 0.05; }
-  .edge-label {
-    font-size: 10px;
-    fill: var(--text3);
-    pointer-events: none;
-    user-select: none;
-  }
+/* toolbar */
+#toolbar { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 10; }
+#searchbox {
+  font-size: 11px; padding: 5px 9px; border-radius: 6px;
+  border: 1px solid var(--border2); background: var(--bg2); color: var(--text); width: 180px; outline: none;
+}
+#searchbox::placeholder { color: var(--text3); }
+#filters { display: flex; gap: 4px; flex-wrap: wrap; }
+.fb {
+  font-size: 10px; padding: 3px 8px; border-radius: 12px;
+  border: 1px solid var(--border2); background: var(--bg2); color: var(--text2);
+  cursor: pointer; white-space: nowrap; transition: all 0.12s;
+}
+.fb:hover, .fb.on { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-  /* ── Side panel ── */
-  #panel {
-    width: var(--panel);
-    height: 100%;
-    background: var(--bg2);
-    border-left: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: width 0.25s ease;
-    flex-shrink: 0;
-  }
-  #panel.collapsed { width: 0; border: none; }
+/* legend */
+#legend {
+  position: absolute; bottom: 12px; left: 12px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 9px 12px; font-size: 10px;
+}
+#legend-title { font-size: 9px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; }
+.lr { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; color: var(--text2); }
+.lr:last-child { margin-bottom: 0; }
+.ld { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
-  #panel-header {
-    padding: 20px 20px 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  #panel-type-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 6px;
-  }
-  #panel-label {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.3;
-    color: var(--text);
-  }
-  #panel-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text3);
-    font-size: 18px;
-    line-height: 1;
-    padding: 2px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  #panel-close:hover { color: var(--text); }
-
-  #panel-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px 20px 24px;
-  }
-  .panel-section { margin-bottom: 20px; }
-  .panel-section-title {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 8px;
-  }
-  .panel-desc {
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--text2);
-  }
-  .connection-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    margin-bottom: 6px;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-  .connection-item:hover { border-color: var(--border2); }
-  .conn-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-  .conn-label { font-size: 12px; color: var(--text); font-weight: 500; }
-  .conn-rel { font-size: 11px; color: var(--text3); margin-top: 1px; }
-
-  /* ── Legend ── */
-  #legend {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 16px;
-    font-size: 11px;
-    line-height: 1;
-  }
-  #legend-title {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 10px;
-  }
-  .legend-row {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin-bottom: 7px;
-  }
-  .legend-row:last-child { margin-bottom: 0; }
-  .legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .legend-label { color: var(--text2); }
-
-  /* ── Controls ── */
-  #controls {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  #filter-bar {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .filter-btn {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border2);
-    background: var(--bg2);
-    color: var(--text2);
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .filter-btn:hover, .filter-btn.active {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-  }
-
-  #search-wrap {
-    position: relative;
-  }
-  #search {
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border2);
-    background: var(--bg2);
-    color: var(--text);
-    width: 200px;
-    outline: none;
-  }
-  #search:focus { border-color: var(--border2); }
-  #search::placeholder { color: var(--text3); }
-
-  /* ── Empty state ── */
-  #empty {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: var(--text3);
-    font-size: 14px;
-    pointer-events: none;
-    display: none;
-  }
+#nodecount { position: absolute; bottom: 12px; right: 16px; font-size: 10px; color: var(--text3); }
 </style>
 </head>
 <body>
@@ -303,7 +131,7 @@
   <div id="canvas">
     <svg id="graph">
       <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
           <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
       </defs>
@@ -312,48 +140,55 @@
         <g id="nodes-g"></g>
       </g>
     </svg>
-    <div id="controls">
-      <div id="search-wrap">
-        <input id="search" type="text" placeholder="Search nodes…" autocomplete="off"/>
-      </div>
-      <div id="filter-bar">
-        <button class="filter-btn active" data-type="all">all</button>
-        <button class="filter-btn" data-type="intuition">intuitions</button>
-        <button class="filter-btn" data-type="concept">concepts</button>
-        <button class="filter-btn" data-type="question">questions</button>
-        <button class="filter-btn" data-type="paper">papers</button>
+
+    <div id="toolbar">
+      <input id="searchbox" type="text" placeholder="Search…" autocomplete="off"/>
+      <div id="filters">
+        <button class="fb on" data-t="all">all</button>
+        <button class="fb" data-t="intuition">intuitions</button>
+        <button class="fb" data-t="concept">concepts</button>
+        <button class="fb" data-t="question">questions</button>
+        <button class="fb" data-t="paper">papers</button>
       </div>
     </div>
+
+    <div id="depth-indicator">
+      <div class="depth-pip active" data-d="0"></div>
+      <div class="depth-pip" data-d="1"></div>
+      <div class="depth-pip" data-d="2"></div>
+    </div>
+
+    <div id="zoom-hint">scroll to zoom · deeper zoom reveals more</div>
+
     <div id="legend">
       <div id="legend-title">Node type</div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--intuition)"></div><span class="legend-label">intuition</span></div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--concept)"></div><span class="legend-label">concept</span></div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--question)"></div><span class="legend-label">question</span></div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--paper)"></div><span class="legend-label">paper / person</span></div>
+      <div class="lr"><div class="ld" style="background:var(--c-intuition)"></div>intuition (zoom 1×)</div>
+      <div class="lr"><div class="ld" style="background:var(--c-concept)"></div>concept (zoom 1.8×)</div>
+      <div class="lr"><div class="ld" style="background:var(--c-question)"></div>question · paper (zoom 3×)</div>
     </div>
-    <div id="empty">No nodes match this filter.</div>
+
+    <div id="nodecount"></div>
   </div>
 
   <div id="panel" class="collapsed">
     <div id="panel-header">
-      <div>
-        <div id="panel-type-badge"></div>
-        <div id="panel-label"></div>
-      </div>
+      <div id="panel-badge"></div>
+      <div id="panel-depth-label"></div>
+      <div id="panel-label"></div>
       <button id="panel-close">×</button>
     </div>
     <div id="panel-body">
-      <div class="panel-section">
-        <div class="panel-section-title">Description</div>
-        <div class="panel-desc" id="panel-desc"></div>
+      <div class="psec">
+        <div class="psec-title">Description</div>
+        <div class="pdesc" id="panel-desc"></div>
       </div>
-      <div class="panel-section" id="panel-connections-section">
-        <div class="panel-section-title">Connections</div>
-        <div id="panel-connections"></div>
+      <div class="psec" id="panel-conns-sec">
+        <div class="psec-title">Connections</div>
+        <div id="panel-conns"></div>
       </div>
-      <div class="panel-section" id="panel-sources-section">
-        <div class="panel-section-title">Sources</div>
-        <div class="panel-desc" id="panel-sources"></div>
+      <div class="psec" id="panel-sources-sec" style="display:none">
+        <div class="psec-title">From chat</div>
+        <div class="pdesc" id="panel-sources"></div>
       </div>
     </div>
   </div>
@@ -362,208 +197,275 @@
 <script>
 const GRAPH_URL = 'graph.json';
 
-const TYPE_COLOR = {
-  intuition: 'var(--intuition)',
-  concept:   'var(--concept)',
-  question:  'var(--question)',
-  paper:     'var(--paper)',
-  person:    'var(--person)',
-};
-const TYPE_LIGHT = {
-  intuition: 'var(--intuition-light)',
-  concept:   'var(--concept-light)',
-  question:  'var(--question-light)',
-  paper:     'var(--paper-light)',
-  person:    'var(--person-light)',
-};
-const NODE_RADIUS = { intuition: 20, concept: 16, question: 13, paper: 10, person: 10 };
-const EDGE_OPACITY = { high: 'var(--edge-high)', medium: 'var(--edge-med)', speculative: 'var(--edge-spec)' };
+const TYPE_COLOR  = { intuition:'var(--c-intuition)', concept:'var(--c-concept)', question:'var(--c-question)', paper:'var(--c-paper)', person:'var(--c-person)' };
+const TYPE_LCOLOR = { intuition:'var(--l-intuition)', concept:'var(--l-concept)', question:'var(--l-question)', paper:'var(--l-paper)', person:'var(--l-person)' };
+const TYPE_RADIUS = { intuition: 20, concept: 14, question: 11, paper: 9, person: 9 };
+const DEPTH_LABEL = ['fundamental intuition', 'mathematical concept', 'open question / reference'];
 
-let graphData, simulation, selectedNode = null, activeFilter = 'all', searchQuery = '';
+/* LOD thresholds — zoom scale at which each depth becomes visible */
+const LOD_THRESHOLD = { 0: 0, 1: 1.6, 2: 2.8 };
+/* fade-in transition width (scale units on either side of threshold) */
+const LOD_FADE = 0.35;
+
+/* edge opacity by confidence */
+const EDGE_OP = { high: 0.5, medium: 0.22, speculative: 0.09 };
+
+let graphData = null;
+let simulation = null;
+let currentZoom = 1;
+let activeFilter = 'all';
+let searchQuery = '';
+let selectedNode = null;
+let allSimNodes = [];
+let allSimEdges = [];
+let nodeSelection, edgeSelection;
+
+function col(t)  { return TYPE_COLOR[t]  || TYPE_COLOR.person; }
+function lcol(t) { return TYPE_LCOLOR[t] || TYPE_LCOLOR.person; }
+function rad(t)  { return TYPE_RADIUS[t] || 11; }
+
+/* compute [0,1] visibility of a node at current zoom based on its depth */
+function nodeVisibility(depth, zoom) {
+  const thr = LOD_THRESHOLD[depth] ?? 0;
+  const raw = (zoom - thr) / LOD_FADE;
+  return Math.max(0, Math.min(1, raw));
+}
 
 async function init() {
   const resp = await fetch(GRAPH_URL);
   graphData = await resp.json();
-  renderGraph();
+  buildGraph();
+  hideHintAfterDelay();
 }
 
-function getColor(type) { return TYPE_COLOR[type] || TYPE_COLOR.person; }
-function getRadius(type) { return NODE_RADIUS[type] || 12; }
-
-function visibleNodes() {
-  return graphData.nodes.filter(n => {
-    const typeOk = activeFilter === 'all' || n.type === activeFilter;
-    const searchOk = !searchQuery || n.label.toLowerCase().includes(searchQuery) || (n.description||'').toLowerCase().includes(searchQuery);
-    return typeOk && searchOk;
-  });
+function hideHintAfterDelay() {
+  setTimeout(() => document.getElementById('zoom-hint').classList.add('hidden'), 4000);
 }
 
-function renderGraph() {
+function buildGraph() {
   const svg = d3.select('#graph');
-  const g = d3.select('#zoom-group');
-  d3.select('#edges-g').selectAll('*').remove();
-  d3.select('#nodes-g').selectAll('*').remove();
-
-  const nodes = visibleNodes();
-  const nodeIds = new Set(nodes.map(n => n.id));
-  const edges = graphData.edges.filter(e => nodeIds.has(e.source) && nodeIds.has(e.target));
-
-  document.getElementById('empty').style.display = nodes.length === 0 ? 'block' : 'none';
-
   const W = document.getElementById('canvas').clientWidth;
   const H = document.getElementById('canvas').clientHeight;
 
-  const nodeMap = {};
-  nodes.forEach(n => { nodeMap[n.id] = n; });
+  d3.select('#nodes-g').selectAll('*').remove();
+  d3.select('#edges-g').selectAll('*').remove();
 
-  const simNodes = nodes.map(n => ({ ...n }));
-  const simEdges = edges.map(e => ({
-    ...e,
-    source: simNodes.find(n => n.id === e.source),
-    target: simNodes.find(n => n.id === e.target),
-  })).filter(e => e.source && e.target);
+  const nodes = graphData.nodes.filter(n => {
+    if (activeFilter !== 'all' && n.type !== activeFilter) return false;
+    if (searchQuery && !n.label.toLowerCase().includes(searchQuery) && !(n.description||'').toLowerCase().includes(searchQuery)) return false;
+    return true;
+  });
+  const nids = new Set(nodes.map(n => n.id));
+  const edges = graphData.edges.filter(e => nids.has(e.source) && nids.has(e.target));
 
-  simulation = d3.forceSimulation(simNodes)
-    .force('link', d3.forceLink(simEdges).id(d => d.id).distance(d => {
-      const sr = getRadius(d.source.type), tr = getRadius(d.target.type);
-      return 80 + sr + tr;
-    }).strength(0.4))
-    .force('charge', d3.forceManyBody().strength(d => -getRadius(d.type) * 18))
+  allSimNodes = nodes.map(n => ({ ...n }));
+  const idmap = {};
+  allSimNodes.forEach(n => idmap[n.id] = n);
+  allSimEdges = edges.map(e => ({ ...e, source: idmap[e.source], target: idmap[e.target] })).filter(e => e.source && e.target);
+
+  document.getElementById('nodecount').textContent = nodes.length + ' nodes · ' + edges.length + ' edges';
+
+  if (simulation) simulation.stop();
+  simulation = d3.forceSimulation(allSimNodes)
+    .force('link', d3.forceLink(allSimEdges).id(d => d.id)
+      .distance(d => {
+        const baseDist = 100 + rad(d.source.type) + rad(d.target.type);
+        /* pull same-depth nodes closer together */
+        const depthMatch = (d.source.depth === d.target.depth) ? 0.7 : 1.2;
+        return baseDist * depthMatch;
+      })
+      .strength(0.3))
+    .force('charge', d3.forceManyBody().strength(d => -rad(d.type) * 22))
     .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collision', d3.forceCollide(d => getRadius(d.type) + 18));
+    .force('collide', d3.forceCollide(d => rad(d.type) + 20));
 
-  const edgeG = d3.select('#edges-g').selectAll('.edge-group')
-    .data(simEdges)
-    .enter()
-    .append('g')
-    .attr('class', 'edge-group');
-
-  const edgeLine = edgeG.append('line')
-    .attr('class', 'edge')
-    .attr('stroke', d => EDGE_OPACITY[d.confidence] || EDGE_OPACITY.medium)
+  /* edges */
+  edgeSelection = d3.select('#edges-g').selectAll('line')
+    .data(allSimEdges)
+    .enter().append('line')
+    .attr('class', 'edge-line')
+    .attr('stroke-width', d => d.confidence === 'high' ? 1.5 : 1)
+    .attr('stroke-dasharray', d => d.confidence === 'speculative' ? '4 3' : 'none')
     .attr('marker-end', 'url(#arr)');
 
-  const nodeG = d3.select('#nodes-g').selectAll('.node')
-    .data(simNodes)
-    .enter()
-    .append('g')
-    .attr('class', 'node')
+  /* nodes */
+  const nodeG = d3.select('#nodes-g').selectAll('g')
+    .data(allSimNodes).enter().append('g').attr('class', 'node-g')
     .call(d3.drag()
-      .on('start', (event, d) => {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x; d.fy = d.y;
-      })
-      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-      .on('end', (event, d) => {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null; d.fy = null;
-      })
-    )
-    .on('click', (event, d) => {
-      event.stopPropagation();
-      selectNode(d, simNodes, simEdges, edgeG, nodeG);
-    });
+      .on('start', (ev, d) => { if (!ev.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag',  (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
+      .on('end',   (ev, d) => { if (!ev.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }))
+    .on('click', (ev, d) => { ev.stopPropagation(); onNodeClick(d); });
+
+  /* pulse ring for depth-0 nodes only */
+  nodeG.filter(d => d.depth === 0)
+    .append('circle')
+    .attr('class', 'pulse-ring')
+    .attr('r', d => rad(d.type) + 6)
+    .attr('stroke', d => col(d.type))
+    .attr('stroke-width', 1.5)
+    .attr('stroke-opacity', 0.4);
 
   nodeG.append('circle')
-    .attr('r', d => getRadius(d.type))
-    .attr('fill', d => getColor(d.type))
-    .attr('fill-opacity', 0.2)
-    .attr('stroke', d => getColor(d.type))
-    .attr('stroke-width', d => d.type === 'intuition' ? 2 : 1.5);
+    .attr('r', d => rad(d.type))
+    .attr('fill', d => col(d.type))
+    .attr('fill-opacity', 0.18)
+    .attr('stroke', d => col(d.type))
+    .attr('stroke-width', d => d.depth === 0 ? 2 : 1.5);
 
   nodeG.append('text')
-    .attr('dy', d => getRadius(d.type) + 14)
     .attr('text-anchor', 'middle')
-    .text(d => d.label);
+    .attr('dy', d => rad(d.type) + 12)
+    .style('font-size', d => d.depth === 0 ? '11px' : '10px')
+    .style('font-weight', d => d.depth === 0 ? '500' : '400')
+    .text(d => d.label.length > 24 ? d.label.slice(0, 22) + '…' : d.label);
 
-  svg.on('click', () => {
+  nodeSelection = nodeG;
+
+  /* zoom */
+  const zoom = d3.zoom()
+    .scaleExtent([0.3, 8])
+    .on('zoom', ev => {
+      d3.select('#zoom-group').attr('transform', ev.transform);
+      currentZoom = ev.transform.k;
+      applyLOD();
+      updateDepthPips();
+      document.getElementById('zoom-hint').classList.add('hidden');
+    });
+
+  svg.call(zoom).on('click', () => {
     selectedNode = null;
-    nodeG.classed('dimmed', false);
-    edgeG.classed('dimmed', false);
+    clearHighlight();
     collapsePanel();
   });
 
-  const zoom = d3.zoom()
-    .scaleExtent([0.3, 3])
-    .on('zoom', e => g.attr('transform', e.transform));
-  svg.call(zoom);
-
   simulation.on('tick', () => {
-    edgeLine
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
+    edgeSelection
+      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
       .attr('x2', d => {
         const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
-        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-        return d.target.x - (dx/dist) * (getRadius(d.target.type) + 4);
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        return d.target.x - (dx / dist) * (rad(d.target.type) + 3);
       })
       .attr('y2', d => {
         const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
-        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-        return d.target.y - (dy/dist) * (getRadius(d.target.type) + 4);
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        return d.target.y - (dy / dist) * (rad(d.target.type) + 3);
       });
-
-    nodeG.attr('transform', d => `translate(${d.x},${d.y})`);
+    nodeSelection.attr('transform', d => `translate(${d.x},${d.y})`);
+    applyLOD();
   });
 }
 
-function selectNode(d, simNodes, simEdges, edgeG, nodeG) {
-  selectedNode = d;
+function applyLOD() {
+  if (!nodeSelection || !edgeSelection) return;
+  const z = currentZoom;
 
+  nodeSelection.each(function(d) {
+    const vis = nodeVisibility(d.depth ?? 0, z);
+    d3.select(this).style('opacity', vis).style('pointer-events', vis > 0.1 ? 'all' : 'none');
+  });
+
+  edgeSelection.each(function(d) {
+    const srcVis = nodeVisibility(d.source.depth ?? 0, z);
+    const tgtVis = nodeVisibility(d.target.depth ?? 0, z);
+    /* edge only shows when BOTH endpoints are visible */
+    const edgeVis = Math.min(srcVis, tgtVis);
+    const baseOp = EDGE_OP[d.confidence] || EDGE_OP.medium;
+    d3.select(this)
+      .style('opacity', edgeVis * baseOp * 3)
+      .attr('stroke', `rgba(136,135,128,${baseOp})`);
+  });
+}
+
+function updateDepthPips() {
+  const z = currentZoom;
+  document.querySelectorAll('.depth-pip').forEach(pip => {
+    const d = parseInt(pip.dataset.d);
+    const vis = nodeVisibility(d, z);
+    pip.classList.toggle('active', vis > 0.5);
+  });
+}
+
+function onNodeClick(d) {
+  /* if node is not yet visible at current zoom, nudge the user */
+  if (nodeVisibility(d.depth ?? 0, currentZoom) < 0.5) return;
+  selectedNode = d;
+  highlightNeighbourhood(d);
+  showPanel(d);
+}
+
+function highlightNeighbourhood(d) {
   const connectedIds = new Set([d.id]);
-  const connectedEdges = new Set();
-  simEdges.forEach((e, i) => {
+  const connectedEdgeIdx = new Set();
+  allSimEdges.forEach((e, i) => {
     if (e.source.id === d.id || e.target.id === d.id) {
       connectedIds.add(e.source.id);
       connectedIds.add(e.target.id);
-      connectedEdges.add(i);
+      connectedEdgeIdx.add(i);
     }
   });
-
-  nodeG.classed('dimmed', n => !connectedIds.has(n.id));
-  edgeG.classed('dimmed', (e, i) => !connectedEdges.has(i));
-
-  showPanel(d, simEdges);
+  nodeSelection.style('opacity', n => {
+    const lodVis = nodeVisibility(n.depth ?? 0, currentZoom);
+    if (lodVis < 0.05) return 0;
+    return connectedIds.has(n.id) ? lodVis : lodVis * 0.15;
+  });
+  edgeSelection.style('opacity', (e, i) => {
+    const srcVis = nodeVisibility(e.source.depth ?? 0, currentZoom);
+    const tgtVis = nodeVisibility(e.target.depth ?? 0, currentZoom);
+    const edgeVis = Math.min(srcVis, tgtVis);
+    const baseOp = EDGE_OP[e.confidence] || EDGE_OP.medium;
+    if (!connectedEdgeIdx.has(i)) return edgeVis * baseOp * 0.2;
+    return edgeVis * baseOp * 4;
+  });
 }
 
-function showPanel(d, simEdges) {
+function clearHighlight() {
+  applyLOD();
+}
+
+function showPanel(d) {
   const panel = document.getElementById('panel');
   panel.classList.remove('collapsed');
 
-  const badge = document.getElementById('panel-type-badge');
+  const badge = document.getElementById('panel-badge');
   badge.textContent = d.type;
-  badge.style.background = TYPE_LIGHT[d.type] || TYPE_LIGHT.person;
-  badge.style.color = getColor(d.type).replace('var(', '').replace(')', '');
-  badge.style.color = getColor(d.type);
+  badge.style.background = lcol(d.type);
+  badge.style.color = col(d.type);
 
+  document.getElementById('panel-depth-label').textContent = DEPTH_LABEL[d.depth ?? 0] || '';
   document.getElementById('panel-label').textContent = d.label;
   document.getElementById('panel-desc').textContent = d.description || 'No description yet.';
 
-  const conns = simEdges.filter(e => e.source.id === d.id || e.target.id === d.id);
-  const connDiv = document.getElementById('panel-connections');
-  connDiv.innerHTML = '';
-  if (conns.length === 0) {
-    connDiv.innerHTML = '<div class="panel-desc" style="color:var(--text3)">No connections yet.</div>';
+  /* connections — only show those whose other end is currently visible */
+  const conns = allSimEdges.filter(e => e.source.id === d.id || e.target.id === d.id);
+  const cd = document.getElementById('panel-conns');
+  cd.innerHTML = '';
+  if (!conns.length) {
+    cd.innerHTML = '<div class="pdesc" style="color:var(--text3)">No connections yet.</div>';
   } else {
     conns.forEach(e => {
       const other = e.source.id === d.id ? e.target : e.source;
-      const direction = e.source.id === d.id ? '→' : '←';
-      const item = document.createElement('div');
-      item.className = 'connection-item';
-      item.innerHTML = `
-        <div class="conn-dot" style="background:${getColor(other.type)}"></div>
+      const otherVis = nodeVisibility(other.depth ?? 0, currentZoom);
+      const dir = e.source.id === d.id ? '→' : '←';
+      const el = document.createElement('div');
+      el.className = 'conn-item';
+      const hiddenHint = otherVis < 0.5 ? `<div class="conn-hint">zoom in to reveal</div>` : '';
+      el.innerHTML = `
+        <div class="conn-dot" style="background:${col(other.type)};opacity:${otherVis < 0.5 ? 0.35 : 1}"></div>
         <div>
-          <div class="conn-label">${direction} ${other.label}</div>
-          <div class="conn-rel">${e.relation.replace(/-/g,' ')}</div>
+          <div class="conn-label" style="opacity:${otherVis < 0.5 ? 0.4 : 1}">${dir} ${other.label}</div>
+          <div class="conn-rel">${e.relation.replace(/-/g, ' ')}</div>
+          ${hiddenHint}
         </div>`;
-      connDiv.appendChild(item);
+      cd.appendChild(el);
     });
   }
 
   const sources = (d.sources || []).filter(s => s !== 'seed');
-  const srcEl = document.getElementById('panel-sources');
-  document.getElementById('panel-sources-section').style.display = sources.length ? 'block' : 'none';
-  srcEl.textContent = sources.join(', ');
+  const srcSec = document.getElementById('panel-sources-sec');
+  srcSec.style.display = sources.length ? 'block' : 'none';
+  document.getElementById('panel-sources').textContent = sources.join(', ');
 }
 
 function collapsePanel() {
@@ -572,27 +474,26 @@ function collapsePanel() {
 
 document.getElementById('panel-close').addEventListener('click', () => {
   selectedNode = null;
+  clearHighlight();
   collapsePanel();
-  d3.selectAll('.node').classed('dimmed', false);
-  d3.selectAll('.edge-group').classed('dimmed', false);
 });
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll('.fb').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.type;
+    document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    activeFilter = btn.dataset.t;
     selectedNode = null;
     collapsePanel();
-    renderGraph();
+    buildGraph();
   });
 });
 
-document.getElementById('search').addEventListener('input', e => {
+document.getElementById('searchbox').addEventListener('input', e => {
   searchQuery = e.target.value.toLowerCase().trim();
   selectedNode = null;
   collapsePanel();
-  renderGraph();
+  buildGraph();
 });
 
 init();

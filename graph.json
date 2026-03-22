@@ -6,9 +6,13 @@
       "type": "concept",
       "description": "The study of dynamical systems with polynomial (sub-exponential) divergence of orbits. Sits between elliptic and hyperbolic dynamics; complexity shifts into renormalisation rather than phase-space expansion.",
       "confidence": "high",
-      "sources": ["seed", "spectral-geometry-and-renormalisation"],
+      "sources": [
+        "seed",
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2025-03-21",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "random-matrix-products",
@@ -16,9 +20,12 @@
       "type": "concept",
       "description": "Products of matrices drawn from a probability distribution. Central objects in the study of Lyapunov exponents and multiplicative ergodic theory.",
       "confidence": "high",
-      "sources": ["seed"],
+      "sources": [
+        "seed"
+      ],
       "added": "2025-03-21",
-      "updated": "2025-03-21"
+      "updated": "2025-03-21",
+      "depth": 1
     },
     {
       "id": "multifractal-analysis",
@@ -26,9 +33,13 @@
       "type": "concept",
       "description": "The study of the dimensional structure of level sets of ergodic averages. Quantifies the heterogeneity of fractal measures; an open question asks whether analogous formalism applies to Rauzy-type systems.",
       "confidence": "high",
-      "sources": ["seed", "spectral-geometry-and-renormalisation"],
+      "sources": [
+        "seed",
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2025-03-21",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "stopping-times",
@@ -36,19 +47,26 @@
       "type": "concept",
       "description": "Random variables representing the time at which a stochastic process satisfies a given condition. Fundamental in probability theory and ergodic theory.",
       "confidence": "high",
-      "sources": ["seed"],
+      "sources": [
+        "seed"
+      ],
       "added": "2025-03-21",
-      "updated": "2025-03-21"
+      "updated": "2025-03-21",
+      "depth": 1
     },
     {
       "id": "lyapunov-exponents",
       "label": "Lyapunov exponents",
       "type": "concept",
-      "description": "Quantities measuring the average exponential rate of divergence of nearby trajectories. The bridge between random matrix products and dynamical behaviour; governed by the Kontsevich–Zorich cocycle in Teichmüller dynamics.",
+      "description": "Quantities measuring the average exponential rate of divergence of nearby trajectories. The bridge between random matrix products and dynamical behaviour; governed by the Kontsevich\u2013Zorich cocycle in Teichm\u00fcller dynamics.",
       "confidence": "high",
-      "sources": ["seed", "spectral-geometry-and-renormalisation"],
+      "sources": [
+        "seed",
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2025-03-21",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "spectrum-as-compressed-geometry",
@@ -56,9 +74,12 @@
       "type": "intuition",
       "description": "Spectral data acts as a compressed encoding of geometric and dynamical structure, preserving some invariants but losing full detail. Highlighted by Kac's question and wave propagation in billiard domains.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 0
     },
     {
       "id": "dynamics-vs-renormalisation-duality",
@@ -66,9 +87,12 @@
       "type": "intuition",
       "description": "When dynamics lacks expansion (parabolic systems), complexity shifts from phase space into renormalisation or parameter space. Seen in comparison between polygonal billiards, Rauzy induction, and hyperbolic systems.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 0
     },
     {
       "id": "infinite-renormalisation-as-irreducibility",
@@ -76,19 +100,25 @@
       "type": "intuition",
       "description": "Infinite renormalisability signals that a system cannot be reduced to a finite description and retains structure across all scales. Evidenced by Rauzy induction, continued fractions, and the Rauzy gasket.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 0
     },
     {
       "id": "wave-particle-dual-encoding",
-      "label": "wave–particle dual encoding",
+      "label": "wave\u2013particle dual encoding",
       "type": "intuition",
       "description": "Linear wave phenomena encode underlying nonlinear trajectory dynamics, with periodic orbits leaving measurable spectral signatures. Formalised by trace formulas in billiard and quantum contexts.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 0
     },
     {
       "id": "parameter-space-fractals",
@@ -96,9 +126,12 @@
       "type": "intuition",
       "description": "In non-expanding systems, fractal structure emerges in parameter space via renormalisation rather than in phase space. Contrasts Rauzy gasket (parameter) with Cantor repellers (phase space).",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 0
     },
     {
       "id": "spectral-geometry",
@@ -106,19 +139,25 @@
       "type": "concept",
       "description": "Study of how geometric properties of a domain are encoded in the eigenvalues of its Laplacian. Foundational question: can one hear the shape of a drum?",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "laplacian-spectrum",
       "label": "Laplacian spectrum",
       "type": "concept",
-      "description": "The set of eigenvalues of the Laplace–Beltrami operator on a domain, governing wave and heat behaviour. The central object of spectral geometry.",
+      "description": "The set of eigenvalues of the Laplace\u2013Beltrami operator on a domain, governing wave and heat behaviour. The central object of spectral geometry.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "billiard-flow",
@@ -126,9 +165,12 @@
       "type": "concept",
       "description": "Hamiltonian dynamical system of a particle reflecting off the boundary of a domain. Periodic billiard trajectories contribute to spectral trace formulas.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "trace-formula",
@@ -136,9 +178,12 @@
       "type": "concept",
       "description": "A relation expressing spectral data (eigenvalue sums) in terms of periodic orbits of the underlying classical system. Bridges quantum and classical descriptions.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "polygonal-billiards",
@@ -146,19 +191,25 @@
       "type": "concept",
       "description": "Billiard flow in a polygon, leading to parabolic dynamics with singularities at corners. Connects to translation surfaces via the unfolding construction.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "translation-surface",
       "label": "translation surface",
       "type": "concept",
-      "description": "A flat surface with cone-angle singularities obtained by unfolding a rational billiard. The natural geometric object for studying IETs and Teichmüller dynamics.",
+      "description": "A flat surface with cone-angle singularities obtained by unfolding a rational billiard. The natural geometric object for studying IETs and Teichm\u00fcller dynamics.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "iet",
@@ -166,39 +217,51 @@
       "type": "concept",
       "description": "A piecewise isometry of an interval encoding first return maps of directional flows on translation surfaces. Generalises circle rotations.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "rauzy-induction",
       "label": "Rauzy induction",
       "type": "concept",
-      "description": "A renormalisation procedure for interval exchange transformations, analogous to the Euclidean algorithm. Acts as a discrete Poincaré section of the Teichmüller flow.",
+      "description": "A renormalisation procedure for interval exchange transformations, analogous to the Euclidean algorithm. Acts as a discrete Poincar\u00e9 section of the Teichm\u00fcller flow.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "teichmuller-flow",
-      "label": "Teichmüller flow",
+      "label": "Teichm\u00fcller flow",
       "type": "concept",
       "description": "Continuous deformation of translation surfaces via directional stretching. Drives the dynamics on moduli spaces of translation surfaces.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "rauzy-gasket",
       "label": "Rauzy gasket",
       "type": "concept",
-      "description": "A fractal subset of the IET parameter space defined by infinite renormalisability under Rauzy induction. Analogue of a Sierpiński-type fractal in this setting.",
+      "description": "A fractal subset of the IET parameter space defined by infinite renormalisability under Rauzy induction. Analogue of a Sierpi\u0144ski-type fractal in this setting.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "continued-fractions",
@@ -206,19 +269,25 @@
       "type": "concept",
       "description": "Renormalisation scheme for circle rotations, providing the 1D model for infinite renormalisation. The Gauss map is the corresponding dynamical system on the parameter space.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "kontsevich-zorich-cocycle",
-      "label": "Kontsevich–Zorich cocycle",
+      "label": "Kontsevich\u2013Zorich cocycle",
       "type": "concept",
-      "description": "A cocycle over the Teichmüller flow describing growth rates of relative cohomology. Its Lyapunov exponents govern deviation phenomena in translation surface dynamics.",
+      "description": "A cocycle over the Teichm\u00fcller flow describing growth rates of relative cohomology. Its Lyapunov exponents govern deviation phenomena in translation surface dynamics.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "substitution-tilings",
@@ -226,9 +295,12 @@
       "type": "concept",
       "description": "Aperiodic tilings generated by inflation rules, producing fractal structures via repeated scaling. Canonical example: Penrose tilings.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 1
     },
     {
       "id": "q-multifractality-rauzy",
@@ -236,19 +308,25 @@
       "type": "question",
       "description": "Is there a multifractal formalism or spectrum associated to Rauzy induction or the Rauzy gasket, analogous to hyperbolic systems? Would unify parabolic renormalisation with thermodynamic formalism.",
       "confidence": "medium",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "q-spectral-polygonal",
       "label": "spectral interpretation of polygonal billiards?",
       "type": "question",
-      "description": "How precisely do orbit family degeneracies in polygonal billiards affect spectral statistics and trace formulas? Clarifies limits of wave–particle correspondence in non-hyperbolic settings.",
+      "description": "How precisely do orbit family degeneracies in polygonal billiards affect spectral statistics and trace formulas? Clarifies limits of wave\u2013particle correspondence in non-hyperbolic settings.",
       "confidence": "medium",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "q-translation-aperiodic",
@@ -256,9 +334,12 @@
       "type": "question",
       "description": "Under what conditions do translation surfaces derived from tilings exhibit genuine aperiodic order in their dynamics? Connects billiards, tilings, and quasicrystal-type structures.",
       "confidence": "medium",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "q-bounded-rauzy",
@@ -266,9 +347,12 @@
       "type": "question",
       "description": "What is the precise analogue of bounded continued fractions in Rauzy induction, and how does it control dynamical deviation? Would link quantitative ergodic properties to the irrational analogy.",
       "confidence": "medium",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "kac-1966",
@@ -276,19 +360,25 @@
       "type": "paper",
       "description": "Foundational paper framing the inverse spectral problem: do Laplacian eigenvalues determine a domain up to isometry? ('Can one hear the shape of a drum?')",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "gordon-webb-wolpert-1992",
-      "label": "Gordon–Webb–Wolpert (1992)",
+      "label": "Gordon\u2013Webb\u2013Wolpert (1992)",
       "type": "paper",
       "description": "Constructed isospectral but non-isometric domains, answering Kac's question negatively.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "weyl",
@@ -296,29 +386,38 @@
       "type": "person",
       "description": "Established the asymptotic relationship between the eigenvalue counting function and domain volume (Weyl's law).",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "masur-veech",
-      "label": "Masur–Veech theory",
+      "label": "Masur\u2013Veech theory",
       "type": "paper",
       "description": "Describes ergodicity and invariant measures for IETs and translation surfaces; foundational for the modern theory.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     },
     {
       "id": "gutzwiller-trace",
       "label": "Gutzwiller trace formula",
       "type": "paper",
-      "description": "Connects quantum spectral data with classical periodic orbits; the foundational tool for wave–particle dual encoding.",
+      "description": "Connects quantum spectral data with classical periodic orbits; the foundational tool for wave\u2013particle dual encoding.",
       "confidence": "high",
-      "sources": ["spectral-geometry-and-renormalisation"],
+      "sources": [
+        "spectral-geometry-and-renormalisation"
+      ],
       "added": "2026-03-22",
-      "updated": "2026-03-22"
+      "updated": "2026-03-22",
+      "depth": 2
     }
   ],
   "edges": [
@@ -326,7 +425,7 @@
       "source": "random-matrix-products",
       "target": "lyapunov-exponents",
       "relation": "is-context-for",
-      "explanation": "Lyapunov exponents are the primary quantities computed from random matrix products via the Furstenberg–Kesten theorem.",
+      "explanation": "Lyapunov exponents are the primary quantities computed from random matrix products via the Furstenberg\u2013Kesten theorem.",
       "confidence": "high",
       "added": "2025-03-21"
     },
@@ -358,7 +457,7 @@
       "source": "spectrum-as-compressed-geometry",
       "target": "rauzy-induction",
       "relation": "is-analogous-to",
-      "explanation": "Both encode complex structure via compressed representations — spectral frequencies versus renormalisation sequences.",
+      "explanation": "Both encode complex structure via compressed representations \u2014 spectral frequencies versus renormalisation sequences.",
       "confidence": "medium",
       "added": "2026-03-22"
     },
@@ -382,7 +481,7 @@
       "source": "rauzy-induction",
       "target": "teichmuller-flow",
       "relation": "is-tool-for",
-      "explanation": "Rauzy induction acts as a discrete Poincaré section of the continuous Teichmüller flow on moduli space.",
+      "explanation": "Rauzy induction acts as a discrete Poincar\u00e9 section of the continuous Teichm\u00fcller flow on moduli space.",
       "confidence": "high",
       "added": "2026-03-22"
     },
@@ -406,7 +505,7 @@
       "source": "substitution-tilings",
       "target": "rauzy-gasket",
       "relation": "unexpectedly-relates-to",
-      "explanation": "Both produce fractal structures via repeated scaling rules — substitution tilings in physical space, the Rauzy gasket in parameter space.",
+      "explanation": "Both produce fractal structures via repeated scaling rules \u2014 substitution tilings in physical space, the Rauzy gasket in parameter space.",
       "confidence": "medium",
       "added": "2026-03-22"
     },
@@ -422,7 +521,7 @@
       "source": "wave-particle-dual-encoding",
       "target": "trace-formula",
       "relation": "is-context-for",
-      "explanation": "Trace formulas are the mathematical formalisation of wave–particle dual encoding: they express spectral sums in terms of periodic orbits.",
+      "explanation": "Trace formulas are the mathematical formalisation of wave\u2013particle dual encoding: they express spectral sums in terms of periodic orbits.",
       "confidence": "high",
       "added": "2026-03-22"
     },
@@ -430,7 +529,7 @@
       "source": "gutzwiller-trace",
       "target": "trace-formula",
       "relation": "is-context-for",
-      "explanation": "The Gutzwiller trace formula is the canonical result instantiating wave–particle correspondence for quantum systems.",
+      "explanation": "The Gutzwiller trace formula is the canonical result instantiating wave\u2013particle correspondence for quantum systems.",
       "confidence": "high",
       "added": "2026-03-22"
     },
@@ -446,7 +545,7 @@
       "source": "gordon-webb-wolpert-1992",
       "target": "spectral-geometry",
       "relation": "is-context-for",
-      "explanation": "Gordon–Webb–Wolpert resolved Kac's question negatively, defining a key boundary of spectral geometry.",
+      "explanation": "Gordon\u2013Webb\u2013Wolpert resolved Kac's question negatively, defining a key boundary of spectral geometry.",
       "confidence": "high",
       "added": "2026-03-22"
     },
@@ -454,7 +553,7 @@
       "source": "masur-veech",
       "target": "iet",
       "relation": "is-context-for",
-      "explanation": "Masur–Veech theory provides the ergodic theory of IETs and translation surfaces, including existence of invariant measures.",
+      "explanation": "Masur\u2013Veech theory provides the ergodic theory of IETs and translation surfaces, including existence of invariant measures.",
       "confidence": "high",
       "added": "2026-03-22"
     },
@@ -462,7 +561,7 @@
       "source": "polygonal-billiards",
       "target": "parabolic-dynamics",
       "relation": "is-context-for",
-      "explanation": "Polygonal billiards are a primary example of parabolic dynamics — polynomial divergence arising from corner singularities.",
+      "explanation": "Polygonal billiards are a primary example of parabolic dynamics \u2014 polynomial divergence arising from corner singularities.",
       "confidence": "high",
       "added": "2026-03-22"
     },
@@ -494,7 +593,7 @@
       "source": "rauzy-induction",
       "target": "multifractal-analysis",
       "relation": "unexpectedly-relates-to",
-      "explanation": "An open question asks whether Rauzy induction admits a multifractal formalism analogous to hyperbolic systems — a potential deep connection. (inferred)",
+      "explanation": "An open question asks whether Rauzy induction admits a multifractal formalism analogous to hyperbolic systems \u2014 a potential deep connection. (inferred)",
       "confidence": "speculative",
       "added": "2026-03-22"
     },
@@ -502,7 +601,7 @@
       "source": "lyapunov-exponents",
       "target": "kontsevich-zorich-cocycle",
       "relation": "is-context-for",
-      "explanation": "The Lyapunov exponents of the Kontsevich–Zorich cocycle govern deviation phenomena in translation surface dynamics. (inferred)",
+      "explanation": "The Lyapunov exponents of the Kontsevich\u2013Zorich cocycle govern deviation phenomena in translation surface dynamics. (inferred)",
       "confidence": "high",
       "added": "2026-03-22"
     },
