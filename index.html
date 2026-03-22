@@ -8,122 +8,92 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #faf9f7; --bg2: #f2f0ec; --text: #2c2c2a; --text2: #5f5e5a; --text3: #888780;
-  --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
-  --c-intuition: #534AB7; --c-concept: #0F6E56; --c-question: #993C1D; --c-paper: #993556; --c-person: #5F5E5A;
-  --l-intuition: #EEEDFE; --l-concept: #E1F5EE; --l-question: #FAECE7; --l-paper: #FBEAF0; --l-person: #F1EFE8;
+  --bg:#faf9f7; --bg2:#f2f0ec; --text:#2c2c2a; --text2:#5f5e5a; --text3:#888780;
+  --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.16);
+  --ci:#534AB7; --cc:#0F6E56; --cq:#993C1D; --cp:#993556; --cn:#5F5E5A;
+  --li:#EEEDFE; --lc:#E1F5EE; --lq:#FAECE7; --lp:#FBEAF0; --ln:#F1EFE8;
 }
-@media (prefers-color-scheme: dark) { :root {
-  --bg: #1c1c1a; --bg2: #252523; --text: #e8e6e0; --text2: #b4b2a9; --text3: #888780;
-  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
-  --c-intuition: #AFA9EC; --c-concept: #5DCAA5; --c-question: #F0997B; --c-paper: #ED93B1; --c-person: #B4B2A9;
-  --l-intuition: #26215C; --l-concept: #04342C; --l-question: #4A1B0C; --l-paper: #4B1528; --l-person: #2C2C2A;
+@media (prefers-color-scheme:dark){:root{
+  --bg:#1c1c1a; --bg2:#252523; --text:#e8e6e0; --text2:#b4b2a9; --text3:#888780;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --ci:#AFA9EC; --cc:#5DCAA5; --cq:#F0997B; --cp:#ED93B1; --cn:#B4B2A9;
+  --li:#26215C; --lc:#04342C; --lq:#4A1B0C; --lp:#4B1528; --ln:#2C2C2A;
 }}
-html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; overflow: hidden; }
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden;}
+#app{display:flex;width:100%;height:100%;}
+#canvas{flex:1;position:relative;overflow:hidden;}
+svg#graph{width:100%;height:100%;display:block;}
+.node-g{cursor:pointer;}
+.node-g circle,.node-g text{pointer-events:none;}
+.edge-line{fill:none;pointer-events:none;}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.65}}
+.pulse-ring{animation:pulse 2.8s ease-in-out infinite;fill:none;pointer-events:none;}
 
-#app { display: flex; width: 100%; height: 100%; }
-#canvas { flex: 1; position: relative; overflow: hidden; }
-svg#graph { width: 100%; height: 100%; display: block; cursor: grab; }
-svg#graph:active { cursor: grabbing; }
+/* zoom controls */
+#zoom-bar{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:0;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:24px;overflow:hidden;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.07);
+}
+.zb{background:none;border:none;cursor:pointer;color:var(--text2);
+  font-size:20px;line-height:1;padding:5px 18px;transition:background .12s,color .12s;}
+.zb:hover{background:var(--border);color:var(--text);}
+.zb:disabled{opacity:.25;cursor:default;}
+#zlabel{font-size:11px;color:var(--text3);padding:0 14px;
+  border-left:1px solid var(--border2);border-right:1px solid var(--border2);
+  min-width:90px;text-align:center;user-select:none;line-height:32px;}
 
-.node-g { cursor: pointer; }
-.node-g circle { transition: r 0.2s; }
-.node-g text { pointer-events: none; user-select: none; fill: var(--text); }
-.edge-line { fill: none; }
+/* depth pips */
+#pips{position:absolute;top:14px;right:14px;display:flex;gap:5px;align-items:center;}
+.pip{width:8px;height:8px;border-radius:50%;background:var(--border2);transition:background .3s,transform .3s;}
+.pip.on{transform:scale(1.5);}
+.pip[data-d="0"].on{background:var(--ci);}
+.pip[data-d="1"].on{background:var(--cc);}
+.pip[data-d="2"].on{background:var(--cq);}
 
-/* depth hint ring — pulses on depth-0 nodes to invite zoom */
-@keyframes pulse-ring {
-  0%   { r: 22px; opacity: 0.4; }
-  70%  { r: 34px; opacity: 0; }
-  100% { r: 34px; opacity: 0; }
-}
-.pulse-ring { animation: pulse-ring 2.8s ease-out infinite; fill: none; }
-
-/* LOD zoom hint banner */
-#zoom-hint {
-  position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
-  background: var(--bg2); border: 1px solid var(--border2);
-  border-radius: 20px; padding: 6px 14px; font-size: 11px; color: var(--text3);
-  pointer-events: none; transition: opacity 0.4s; white-space: nowrap;
-}
-#zoom-hint.hidden { opacity: 0; }
-
-/* depth indicator */
-#depth-indicator {
-  position: absolute; top: 12px; right: 16px;
-  display: flex; gap: 6px; align-items: center;
-}
-.depth-pip {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--border2); transition: background 0.3s, transform 0.3s;
-}
-.depth-pip.active { transform: scale(1.4); }
-.depth-pip[data-d="0"].active { background: var(--c-intuition); }
-.depth-pip[data-d="1"].active { background: var(--c-concept); }
-.depth-pip[data-d="2"].active { background: var(--c-question); }
-
-/* side panel */
-#panel {
-  width: 270px; height: 100%; background: var(--bg2);
-  border-left: 1px solid var(--border); display: flex; flex-direction: column;
-  overflow: hidden; transition: width 0.22s ease; flex-shrink: 0;
-}
-#panel.collapsed { width: 0; border: none; }
-#panel-header { padding: 16px 16px 10px; border-bottom: 1px solid var(--border); position: relative; }
-#panel-badge {
-  display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.07em;
-  text-transform: uppercase; padding: 2px 7px; border-radius: 3px; margin-bottom: 5px;
-}
-#panel-depth-label { font-size: 9px; color: var(--text3); margin-bottom: 4px; }
-#panel-label { font-size: 14px; font-weight: 500; line-height: 1.3; color: var(--text); }
-#panel-close {
-  position: absolute; top: 12px; right: 10px;
-  background: none; border: none; cursor: pointer; color: var(--text3); font-size: 18px; line-height: 1;
-}
-#panel-close:hover { color: var(--text); }
-#panel-body { flex: 1; overflow-y: auto; padding: 14px 16px 24px; }
-.psec { margin-bottom: 16px; }
-.psec-title { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
-.pdesc { font-size: 12px; line-height: 1.6; color: var(--text2); }
-.conn-item {
-  display: flex; align-items: flex-start; gap: 7px; padding: 6px 8px;
-  border-radius: 5px; border: 1px solid var(--border); background: var(--bg);
-  margin-bottom: 5px; cursor: pointer; transition: border-color 0.12s;
-}
-.conn-item:hover { border-color: var(--border2); }
-.conn-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-.conn-label { font-size: 11px; color: var(--text); font-weight: 500; }
-.conn-rel { font-size: 10px; color: var(--text3); margin-top: 1px; }
-.conn-hint { font-size: 10px; color: var(--text3); font-style: italic; margin-top: 2px; }
+/* panel */
+#panel{width:270px;height:100%;background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;transition:width .22s ease;flex-shrink:0;}
+#panel.collapsed{width:0;border:none;}
+#ph{padding:16px 16px 10px;border-bottom:1px solid var(--border);position:relative;}
+#pbadge{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-bottom:4px;}
+#pdepth{font-size:9px;color:var(--text3);margin-bottom:3px;}
+#plabel{font-size:14px;font-weight:500;line-height:1.3;}
+#pclose{position:absolute;top:12px;right:10px;background:none;border:none;
+  cursor:pointer;color:var(--text3);font-size:18px;}
+#pclose:hover{color:var(--text);}
+#pb{flex:1;overflow-y:auto;padding:14px 16px 24px;}
+.psec{margin-bottom:16px;}
+.ptitle{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.pdesc{font-size:12px;line-height:1.6;color:var(--text2);}
+.ci{display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border-radius:5px;
+  border:1px solid var(--border);background:var(--bg);margin-bottom:5px;}
+.ci.live{cursor:pointer;}.ci.live:hover{border-color:var(--border2);}
+.cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.clabel{font-size:11px;font-weight:500;}
+.crel{font-size:10px;color:var(--text3);margin-top:1px;}
+.chint{font-size:10px;color:var(--text3);font-style:italic;margin-top:1px;}
 
 /* toolbar */
-#toolbar { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 10; }
-#searchbox {
-  font-size: 11px; padding: 5px 9px; border-radius: 6px;
-  border: 1px solid var(--border2); background: var(--bg2); color: var(--text); width: 180px; outline: none;
-}
-#searchbox::placeholder { color: var(--text3); }
-#filters { display: flex; gap: 4px; flex-wrap: wrap; }
-.fb {
-  font-size: 10px; padding: 3px 8px; border-radius: 12px;
-  border: 1px solid var(--border2); background: var(--bg2); color: var(--text2);
-  cursor: pointer; white-space: nowrap; transition: all 0.12s;
-}
-.fb:hover, .fb.on { background: var(--text); color: var(--bg); border-color: var(--text); }
+#toolbar{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:6px;z-index:10;}
+#searchbox{font-size:11px;padding:5px 9px;border-radius:6px;
+  border:1px solid var(--border2);background:var(--bg2);color:var(--text);width:180px;outline:none;}
+#searchbox::placeholder{color:var(--text3);}
+#filters{display:flex;gap:4px;flex-wrap:wrap;}
+.fb{font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid var(--border2);
+  background:var(--bg2);color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .12s;}
+.fb:hover,.fb.on{background:var(--text);color:var(--bg);border-color:var(--text);}
 
 /* legend */
-#legend {
-  position: absolute; bottom: 12px; left: 12px;
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 6px; padding: 9px 12px; font-size: 10px;
-}
-#legend-title { font-size: 9px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; }
-.lr { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; color: var(--text2); }
-.lr:last-child { margin-bottom: 0; }
-.ld { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-
-#nodecount { position: absolute; bottom: 12px; right: 16px; font-size: 10px; color: var(--text3); }
+#legend{position:absolute;bottom:58px;left:12px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 12px;}
+#ltitle{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
+.lr{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10px;color:var(--text2);}
+.lr:last-child{margin-bottom:0;}
+.ld{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -135,12 +105,8 @@ svg#graph:active { cursor: grabbing; }
           <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
       </defs>
-      <g id="zoom-group">
-        <g id="edges-g"></g>
-        <g id="nodes-g"></g>
-      </g>
+      <g id="zg"><g id="eg"></g><g id="ng"></g></g>
     </svg>
-
     <div id="toolbar">
       <input id="searchbox" type="text" placeholder="Search…" autocomplete="off"/>
       <div id="filters">
@@ -151,44 +117,36 @@ svg#graph:active { cursor: grabbing; }
         <button class="fb" data-t="paper">papers</button>
       </div>
     </div>
-
-    <div id="depth-indicator">
-      <div class="depth-pip active" data-d="0"></div>
-      <div class="depth-pip" data-d="1"></div>
-      <div class="depth-pip" data-d="2"></div>
+    <div id="pips">
+      <div class="pip on" data-d="0"></div>
+      <div class="pip" data-d="1"></div>
+      <div class="pip" data-d="2"></div>
     </div>
-
-    <div id="zoom-hint">scroll to zoom · deeper zoom reveals more</div>
-
+    <div id="zoom-bar">
+      <button class="zb" id="btn-out" disabled>−</button>
+      <div id="zlabel">intuitions</div>
+      <button class="zb" id="btn-in">+</button>
+    </div>
     <div id="legend">
-      <div id="legend-title">Node type</div>
-      <div class="lr"><div class="ld" style="background:var(--c-intuition)"></div>intuition (zoom 1×)</div>
-      <div class="lr"><div class="ld" style="background:var(--c-concept)"></div>concept (zoom 1.8×)</div>
-      <div class="lr"><div class="ld" style="background:var(--c-question)"></div>question · paper (zoom 3×)</div>
+      <div id="ltitle">+ reveals</div>
+      <div class="lr"><div class="ld" style="background:var(--ci)"></div>intuitions — always</div>
+      <div class="lr"><div class="ld" style="background:var(--cc)"></div>concepts — level 2</div>
+      <div class="lr"><div class="ld" style="background:var(--cq)"></div>questions · papers — level 3</div>
     </div>
-
-    <div id="nodecount"></div>
   </div>
 
   <div id="panel" class="collapsed">
-    <div id="panel-header">
-      <div id="panel-badge"></div>
-      <div id="panel-depth-label"></div>
-      <div id="panel-label"></div>
-      <button id="panel-close">×</button>
+    <div id="ph">
+      <div id="pbadge"></div>
+      <div id="pdepth"></div>
+      <div id="plabel"></div>
+      <button id="pclose">×</button>
     </div>
-    <div id="panel-body">
-      <div class="psec">
-        <div class="psec-title">Description</div>
-        <div class="pdesc" id="panel-desc"></div>
-      </div>
-      <div class="psec" id="panel-conns-sec">
-        <div class="psec-title">Connections</div>
-        <div id="panel-conns"></div>
-      </div>
-      <div class="psec" id="panel-sources-sec" style="display:none">
-        <div class="psec-title">From chat</div>
-        <div class="pdesc" id="panel-sources"></div>
+    <div id="pb">
+      <div class="psec"><div class="ptitle">Description</div><div class="pdesc" id="pdesc"></div></div>
+      <div class="psec"><div class="ptitle">Connections</div><div id="pconns"></div></div>
+      <div class="psec" id="psrc" style="display:none">
+        <div class="ptitle">From chat</div><div class="pdesc" id="psrct"></div>
       </div>
     </div>
   </div>
@@ -196,305 +154,266 @@ svg#graph:active { cursor: grabbing; }
 
 <script>
 const GRAPH_URL = 'graph.json';
+const TC={intuition:'var(--ci)',concept:'var(--cc)',question:'var(--cq)',paper:'var(--cp)',person:'var(--cn)'};
+const TL={intuition:'var(--li)',concept:'var(--lc)',question:'var(--lq)',paper:'var(--lp)',person:'var(--ln)'};
+const TR={intuition:20,concept:14,question:11,paper:9,person:9};
+const DL=['fundamental intuition','mathematical concept','open question · reference'];
+const EOP={high:.55,medium:.26,speculative:.1};
 
-const TYPE_COLOR  = { intuition:'var(--c-intuition)', concept:'var(--c-concept)', question:'var(--c-question)', paper:'var(--c-paper)', person:'var(--c-person)' };
-const TYPE_LCOLOR = { intuition:'var(--l-intuition)', concept:'var(--l-concept)', question:'var(--l-question)', paper:'var(--l-paper)', person:'var(--l-person)' };
-const TYPE_RADIUS = { intuition: 20, concept: 14, question: 11, paper: 9, person: 9 };
-const DEPTH_LABEL = ['fundamental intuition', 'mathematical concept', 'open question / reference'];
+/* LOD levels — maxDepth shown, label, zoom multiplier relative to fit scale */
+const LEVELS=[
+  {maxDepth:0, label:'intuitions',  mult:1.0},
+  {maxDepth:1, label:'+ concepts',  mult:1.7},
+  {maxDepth:2, label:'+ questions', mult:2.8},
+];
+const MAX_LEVEL = LEVELS.length - 1;
 
-/* LOD thresholds — zoom scale at which each depth becomes visible */
-const LOD_THRESHOLD = { 0: 0, 1: 1.6, 2: 2.8 };
-/* fade-in transition width (scale units on either side of threshold) */
-const LOD_FADE = 0.35;
+let gdata, sim, nsel, esel, zb;
+let levelIdx=0, fitScale=1, fitTx=0, fitTy=0;
+let filter='all', query='', selected=null;
+let simNodes=[], simEdges=[];
 
-/* edge opacity by confidence */
-const EDGE_OP = { high: 0.5, medium: 0.22, speculative: 0.09 };
+const col  = t => TC[t]||TC.person;
+const lcol = t => TL[t]||TL.person;
+const rad  = t => TR[t]||11;
+const md   = ()=> LEVELS[levelIdx].maxDepth;
 
-let graphData = null;
-let simulation = null;
-let currentZoom = 1;
-let activeFilter = 'all';
-let searchQuery = '';
-let selectedNode = null;
-let allSimNodes = [];
-let allSimEdges = [];
-let nodeSelection, edgeSelection;
-
-function col(t)  { return TYPE_COLOR[t]  || TYPE_COLOR.person; }
-function lcol(t) { return TYPE_LCOLOR[t] || TYPE_LCOLOR.person; }
-function rad(t)  { return TYPE_RADIUS[t] || 11; }
-
-/* compute [0,1] visibility of a node at current zoom based on its depth */
-function nodeVisibility(depth, zoom) {
-  const thr = LOD_THRESHOLD[depth] ?? 0;
-  const raw = (zoom - thr) / LOD_FADE;
-  return Math.max(0, Math.min(1, raw));
+async function init(){
+  const r=await fetch(GRAPH_URL);
+  gdata=await r.json();
+  build();
+  wireUI();
 }
 
-async function init() {
-  const resp = await fetch(GRAPH_URL);
-  graphData = await resp.json();
-  buildGraph();
-  hideHintAfterDelay();
-}
+function build(){
+  const svg=d3.select('#graph');
+  d3.select('#eg').selectAll('*').remove();
+  d3.select('#ng').selectAll('*').remove();
 
-function hideHintAfterDelay() {
-  setTimeout(() => document.getElementById('zoom-hint').classList.add('hidden'), 4000);
-}
+  const W=document.getElementById('canvas').clientWidth;
+  const H=document.getElementById('canvas').clientHeight;
 
-function buildGraph() {
-  const svg = d3.select('#graph');
-  const W = document.getElementById('canvas').clientWidth;
-  const H = document.getElementById('canvas').clientHeight;
-
-  d3.select('#nodes-g').selectAll('*').remove();
-  d3.select('#edges-g').selectAll('*').remove();
-
-  const nodes = graphData.nodes.filter(n => {
-    if (activeFilter !== 'all' && n.type !== activeFilter) return false;
-    if (searchQuery && !n.label.toLowerCase().includes(searchQuery) && !(n.description||'').toLowerCase().includes(searchQuery)) return false;
+  const nodes=gdata.nodes.filter(n=>{
+    if(filter!=='all'&&n.type!==filter)return false;
+    if(query&&!n.label.toLowerCase().includes(query)&&!(n.description||'').toLowerCase().includes(query))return false;
     return true;
   });
-  const nids = new Set(nodes.map(n => n.id));
-  const edges = graphData.edges.filter(e => nids.has(e.source) && nids.has(e.target));
+  const nids=new Set(nodes.map(n=>n.id));
+  const edges=gdata.edges.filter(e=>nids.has(e.source)&&nids.has(e.target));
 
-  allSimNodes = nodes.map(n => ({ ...n }));
-  const idmap = {};
-  allSimNodes.forEach(n => idmap[n.id] = n);
-  allSimEdges = edges.map(e => ({ ...e, source: idmap[e.source], target: idmap[e.target] })).filter(e => e.source && e.target);
+  simNodes=nodes.map(n=>({...n}));
+  const imap={};
+  simNodes.forEach(n=>imap[n.id]=n);
+  simEdges=edges.map(e=>({...e,source:imap[e.source],target:imap[e.target]})).filter(e=>e.source&&e.target);
 
-  document.getElementById('nodecount').textContent = nodes.length + ' nodes · ' + edges.length + ' edges';
+  if(sim)sim.stop();
+  sim=d3.forceSimulation(simNodes)
+    .force('link',d3.forceLink(simEdges).id(d=>d.id)
+      .distance(d=>(80+rad(d.source.type)+rad(d.target.type))*(d.source.depth===d.target.depth?.75:1.2))
+      .strength(.3))
+    .force('charge',d3.forceManyBody().strength(d=>-rad(d.type)*22))
+    .force('center',d3.forceCenter(W/2,H/2))
+    .force('collide',d3.forceCollide(d=>rad(d.type)+18));
 
-  if (simulation) simulation.stop();
-  simulation = d3.forceSimulation(allSimNodes)
-    .force('link', d3.forceLink(allSimEdges).id(d => d.id)
-      .distance(d => {
-        const baseDist = 100 + rad(d.source.type) + rad(d.target.type);
-        /* pull same-depth nodes closer together */
-        const depthMatch = (d.source.depth === d.target.depth) ? 0.7 : 1.2;
-        return baseDist * depthMatch;
-      })
-      .strength(0.3))
-    .force('charge', d3.forceManyBody().strength(d => -rad(d.type) * 22))
-    .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collide', d3.forceCollide(d => rad(d.type) + 20));
+  esel=d3.select('#eg').selectAll('line').data(simEdges).enter().append('line')
+    .attr('class','edge-line')
+    .attr('stroke-width',d=>d.confidence==='high'?1.5:1)
+    .attr('stroke-dasharray',d=>d.confidence==='speculative'?'4 3':'none')
+    .attr('marker-end','url(#arr)');
 
-  /* edges */
-  edgeSelection = d3.select('#edges-g').selectAll('line')
-    .data(allSimEdges)
-    .enter().append('line')
-    .attr('class', 'edge-line')
-    .attr('stroke-width', d => d.confidence === 'high' ? 1.5 : 1)
-    .attr('stroke-dasharray', d => d.confidence === 'speculative' ? '4 3' : 'none')
-    .attr('marker-end', 'url(#arr)');
-
-  /* nodes */
-  const nodeG = d3.select('#nodes-g').selectAll('g')
-    .data(allSimNodes).enter().append('g').attr('class', 'node-g')
+  const ng=d3.select('#ng').selectAll('g').data(simNodes).enter().append('g')
+    .attr('class','node-g')
     .call(d3.drag()
-      .on('start', (ev, d) => { if (!ev.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-      .on('drag',  (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
-      .on('end',   (ev, d) => { if (!ev.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }))
-    .on('click', (ev, d) => { ev.stopPropagation(); onNodeClick(d); });
+      .on('start',(ev,d)=>{if(!ev.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y;})
+      .on('drag', (ev,d)=>{d.fx=ev.x;d.fy=ev.y;})
+      .on('end',  (ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}))
+    .on('click',(ev,d)=>{ev.stopPropagation();onNodeClick(d);});
 
-  /* pulse ring for depth-0 nodes only */
-  nodeG.filter(d => d.depth === 0)
-    .append('circle')
-    .attr('class', 'pulse-ring')
-    .attr('r', d => rad(d.type) + 6)
-    .attr('stroke', d => col(d.type))
-    .attr('stroke-width', 1.5)
-    .attr('stroke-opacity', 0.4);
+  ng.filter(d=>d.depth===0).append('circle')
+    .attr('class','pulse-ring')
+    .attr('r',d=>rad(d.type)+8)
+    .attr('stroke',d=>col(d.type))
+    .attr('stroke-width',1.5);
 
-  nodeG.append('circle')
-    .attr('r', d => rad(d.type))
-    .attr('fill', d => col(d.type))
-    .attr('fill-opacity', 0.18)
-    .attr('stroke', d => col(d.type))
-    .attr('stroke-width', d => d.depth === 0 ? 2 : 1.5);
+  ng.append('circle')
+    .attr('r',d=>rad(d.type))
+    .attr('fill',d=>col(d.type))
+    .attr('fill-opacity',.18)
+    .attr('stroke',d=>col(d.type))
+    .attr('stroke-width',d=>d.depth===0?2.5:1.5);
 
-  nodeG.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', d => rad(d.type) + 12)
-    .style('font-size', d => d.depth === 0 ? '11px' : '10px')
-    .style('font-weight', d => d.depth === 0 ? '500' : '400')
-    .text(d => d.label.length > 24 ? d.label.slice(0, 22) + '…' : d.label);
+  ng.append('text')
+    .attr('text-anchor','middle')
+    .attr('dy',d=>rad(d.type)+14)
+    .style('font-size',d=>d.depth===0?'12px':'10px')
+    .style('font-weight',d=>d.depth===0?'500':'400')
+    .text(d=>d.label.length>24?d.label.slice(0,22)+'…':d.label);
 
-  nodeSelection = nodeG;
+  nsel=ng;
 
-  /* zoom */
-  const zoom = d3.zoom()
-    .scaleExtent([0.3, 8])
-    .on('zoom', ev => {
-      d3.select('#zoom-group').attr('transform', ev.transform);
-      currentZoom = ev.transform.k;
-      applyLOD();
-      updateDepthPips();
-      document.getElementById('zoom-hint').classList.add('hidden');
+  zb=d3.zoom().scaleExtent([.2,8])
+    .on('zoom',ev=>{
+      d3.select('#zg').attr('transform',ev.transform);
+      /* keep levelIdx in sync if user scroll-zooms */
+      const k=ev.transform.k;
+      if(fitScale>0){
+        const rel=k/fitScale;
+        let li=0;
+        for(let i=0;i<LEVELS.length;i++){if(rel>=LEVELS[i].mult*.95)li=i;}
+        if(li!==levelIdx){levelIdx=li;applyLOD();updateUI();}
+      }
     });
 
-  svg.call(zoom).on('click', () => {
-    selectedNode = null;
-    clearHighlight();
-    collapsePanel();
-  });
+  svg.call(zb).on('click',()=>{selected=null;clearHL();closePanel();});
 
-  simulation.on('tick', () => {
-    edgeSelection
-      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-      .attr('x2', d => {
-        const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        return d.target.x - (dx / dist) * (rad(d.target.type) + 3);
-      })
-      .attr('y2', d => {
-        const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        return d.target.y - (dy / dist) * (rad(d.target.type) + 3);
-      });
-    nodeSelection.attr('transform', d => `translate(${d.x},${d.y})`);
-    applyLOD();
+  /* run sim until it cools, then fit and apply LOD */
+  let ticks=0;
+  sim.on('tick',()=>{
+    ticks++;
+    esel
+      .attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+      .attr('x2',d=>{const dx=d.target.x-d.source.x,dy=d.target.y-d.source.y,dist=Math.sqrt(dx*dx+dy*dy)||1;return d.target.x-(dx/dist)*(rad(d.target.type)+3);})
+      .attr('y2',d=>{const dx=d.target.x-d.source.x,dy=d.target.y-d.source.y,dist=Math.sqrt(dx*dx+dy*dy)||1;return d.target.y-(dy/dist)*(rad(d.target.type)+3);});
+    nsel.attr('transform',d=>`translate(${d.x},${d.y})`);
+
+    /* auto-fit after sim has settled (~120 ticks) */
+    if(ticks===120){
+      fitToScreen();
+      applyLOD();
+      updateUI();
+    }
   });
 }
 
-function applyLOD() {
-  if (!nodeSelection || !edgeSelection) return;
-  const z = currentZoom;
+function fitToScreen(){
+  const W=document.getElementById('canvas').clientWidth;
+  const H=document.getElementById('canvas').clientHeight;
+  const PAD=60;
 
-  nodeSelection.each(function(d) {
-    const vis = nodeVisibility(d.depth ?? 0, z);
-    d3.select(this).style('opacity', vis).style('pointer-events', vis > 0.1 ? 'all' : 'none');
-  });
+  /* compute bounding box of ALL nodes */
+  const xs=simNodes.map(n=>n.x);
+  const ys=simNodes.map(n=>n.y);
+  const x0=Math.min(...xs)-PAD, x1=Math.max(...xs)+PAD;
+  const y0=Math.min(...ys)-PAD, y1=Math.max(...ys)+PAD;
+  const bw=x1-x0, bh=y1-y0;
 
-  edgeSelection.each(function(d) {
-    const srcVis = nodeVisibility(d.source.depth ?? 0, z);
-    const tgtVis = nodeVisibility(d.target.depth ?? 0, z);
-    /* edge only shows when BOTH endpoints are visible */
-    const edgeVis = Math.min(srcVis, tgtVis);
-    const baseOp = EDGE_OP[d.confidence] || EDGE_OP.medium;
-    d3.select(this)
-      .style('opacity', edgeVis * baseOp * 3)
-      .attr('stroke', `rgba(136,135,128,${baseOp})`);
-  });
+  fitScale=Math.min(W/bw, H/bh, 1.5); /* never zoom in past 1.5× on load */
+  fitTx=W/2-fitScale*(x0+bw/2);
+  fitTy=H/2-fitScale*(y0+bh/2);
+
+  const t=d3.zoomIdentity.translate(fitTx,fitTy).scale(fitScale);
+  d3.select('#graph').call(zb.transform, t);
 }
 
-function updateDepthPips() {
-  const z = currentZoom;
-  document.querySelectorAll('.depth-pip').forEach(pip => {
-    const d = parseInt(pip.dataset.d);
-    const vis = nodeVisibility(d, z);
-    pip.classList.toggle('active', vis > 0.5);
-  });
+function applyLOD(){
+  if(!nsel||!esel)return;
+  const cur=md();
+  nsel.style('opacity',d=>(d.depth??0)>cur?0:1)
+      .style('pointer-events',d=>(d.depth??0)>cur?'none':'all');
+  esel.style('opacity',d=>{
+    if((d.source.depth??0)>cur||(d.target.depth??0)>cur)return 0;
+    return EOP[d.confidence]||EOP.medium;
+  }).attr('stroke',d=>`rgba(136,135,128,${EOP[d.confidence]||EOP.medium})`);
 }
 
-function onNodeClick(d) {
-  /* if node is not yet visible at current zoom, nudge the user */
-  if (nodeVisibility(d.depth ?? 0, currentZoom) < 0.5) return;
-  selectedNode = d;
-  highlightNeighbourhood(d);
+function updateUI(){
+  const cur=md();
+  document.querySelectorAll('.pip').forEach(p=>{
+    p.classList.toggle('on',parseInt(p.dataset.d)<=cur);
+  });
+  document.getElementById('zlabel').textContent=LEVELS[levelIdx].label;
+  document.getElementById('btn-out').disabled=levelIdx===0;
+  document.getElementById('btn-in').disabled=levelIdx===MAX_LEVEL;
+}
+
+function zoomTo(idx){
+  idx=Math.max(0,Math.min(MAX_LEVEL,idx));
+  levelIdx=idx;
+  const W=document.getElementById('canvas').clientWidth;
+  const H=document.getElementById('canvas').clientHeight;
+  /* scale relative to the fit scale so the graph always looks right-sized */
+  const targetScale=fitScale*LEVELS[idx].mult;
+  const t=d3.zoomIdentity.translate(W/2,H/2).scale(targetScale).translate(-W/2,-H/2)
+    /* re-apply the fit translation so centre stays centred */
+    .translate((fitTx-W/2)/targetScale*fitScale+W/2/targetScale-W/2/targetScale,
+               (fitTy-H/2)/targetScale*fitScale+H/2/targetScale-H/2/targetScale);
+
+  /* simpler: just scale from current centre */
+  const curT=d3.zoomTransform(document.getElementById('graph'));
+  const scaleBy=targetScale/curT.k;
+  d3.select('#graph').transition().duration(480)
+    .call(zb.scaleBy, scaleBy);
+
+  applyLOD();
+  updateUI();
+}
+
+function onNodeClick(d){
+  if((d.depth??0)>md())return;
+  selected=d;
+  highlightNbhd(d);
   showPanel(d);
 }
 
-function highlightNeighbourhood(d) {
-  const connectedIds = new Set([d.id]);
-  const connectedEdgeIdx = new Set();
-  allSimEdges.forEach((e, i) => {
-    if (e.source.id === d.id || e.target.id === d.id) {
-      connectedIds.add(e.source.id);
-      connectedIds.add(e.target.id);
-      connectedEdgeIdx.add(i);
-    }
+function highlightNbhd(d){
+  const cids=new Set([d.id]);
+  const ceidx=new Set();
+  simEdges.forEach((e,i)=>{
+    if(e.source.id===d.id||e.target.id===d.id){cids.add(e.source.id);cids.add(e.target.id);ceidx.add(i);}
   });
-  nodeSelection.style('opacity', n => {
-    const lodVis = nodeVisibility(n.depth ?? 0, currentZoom);
-    if (lodVis < 0.05) return 0;
-    return connectedIds.has(n.id) ? lodVis : lodVis * 0.15;
-  });
-  edgeSelection.style('opacity', (e, i) => {
-    const srcVis = nodeVisibility(e.source.depth ?? 0, currentZoom);
-    const tgtVis = nodeVisibility(e.target.depth ?? 0, currentZoom);
-    const edgeVis = Math.min(srcVis, tgtVis);
-    const baseOp = EDGE_OP[e.confidence] || EDGE_OP.medium;
-    if (!connectedEdgeIdx.has(i)) return edgeVis * baseOp * 0.2;
-    return edgeVis * baseOp * 4;
+  const cur=md();
+  nsel.style('opacity',n=>(n.depth??0)>cur?0:cids.has(n.id)?1:.1);
+  esel.style('opacity',(e,i)=>{
+    if((e.source.depth??0)>cur||(e.target.depth??0)>cur)return 0;
+    return ceidx.has(i)?Math.min(1,(EOP[e.confidence]||EOP.medium)*4):(EOP[e.confidence]||EOP.medium)*.15;
   });
 }
 
-function clearHighlight() {
-  applyLOD();
-}
+function clearHL(){applyLOD();}
 
-function showPanel(d) {
-  const panel = document.getElementById('panel');
-  panel.classList.remove('collapsed');
-
-  const badge = document.getElementById('panel-badge');
-  badge.textContent = d.type;
-  badge.style.background = lcol(d.type);
-  badge.style.color = col(d.type);
-
-  document.getElementById('panel-depth-label').textContent = DEPTH_LABEL[d.depth ?? 0] || '';
-  document.getElementById('panel-label').textContent = d.label;
-  document.getElementById('panel-desc').textContent = d.description || 'No description yet.';
-
-  /* connections — only show those whose other end is currently visible */
-  const conns = allSimEdges.filter(e => e.source.id === d.id || e.target.id === d.id);
-  const cd = document.getElementById('panel-conns');
-  cd.innerHTML = '';
-  if (!conns.length) {
-    cd.innerHTML = '<div class="pdesc" style="color:var(--text3)">No connections yet.</div>';
-  } else {
-    conns.forEach(e => {
-      const other = e.source.id === d.id ? e.target : e.source;
-      const otherVis = nodeVisibility(other.depth ?? 0, currentZoom);
-      const dir = e.source.id === d.id ? '→' : '←';
-      const el = document.createElement('div');
-      el.className = 'conn-item';
-      const hiddenHint = otherVis < 0.5 ? `<div class="conn-hint">zoom in to reveal</div>` : '';
-      el.innerHTML = `
-        <div class="conn-dot" style="background:${col(other.type)};opacity:${otherVis < 0.5 ? 0.35 : 1}"></div>
-        <div>
-          <div class="conn-label" style="opacity:${otherVis < 0.5 ? 0.4 : 1}">${dir} ${other.label}</div>
-          <div class="conn-rel">${e.relation.replace(/-/g, ' ')}</div>
-          ${hiddenHint}
-        </div>`;
-      cd.appendChild(el);
-    });
-  }
-
-  const sources = (d.sources || []).filter(s => s !== 'seed');
-  const srcSec = document.getElementById('panel-sources-sec');
-  srcSec.style.display = sources.length ? 'block' : 'none';
-  document.getElementById('panel-sources').textContent = sources.join(', ');
-}
-
-function collapsePanel() {
-  document.getElementById('panel').classList.add('collapsed');
-}
-
-document.getElementById('panel-close').addEventListener('click', () => {
-  selectedNode = null;
-  clearHighlight();
-  collapsePanel();
-});
-
-document.querySelectorAll('.fb').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    activeFilter = btn.dataset.t;
-    selectedNode = null;
-    collapsePanel();
-    buildGraph();
+function showPanel(d){
+  document.getElementById('panel').classList.remove('collapsed');
+  const badge=document.getElementById('pbadge');
+  badge.textContent=d.type;badge.style.background=lcol(d.type);badge.style.color=col(d.type);
+  document.getElementById('pdepth').textContent=DL[d.depth??0]||'';
+  document.getElementById('plabel').textContent=d.label;
+  document.getElementById('pdesc').textContent=d.description||'No description yet.';
+  const cur=md();
+  const conns=simEdges.filter(e=>e.source.id===d.id||e.target.id===d.id);
+  const cd=document.getElementById('pconns');
+  cd.innerHTML='';
+  if(!conns.length){cd.innerHTML='<div class="pdesc" style="color:var(--text3)">No connections yet.</div>';}
+  else conns.forEach(e=>{
+    const other=e.source.id===d.id?e.target:e.source;
+    const vis=(other.depth??0)<=cur;
+    const dir=e.source.id===d.id?'→':'←';
+    const el=document.createElement('div');
+    el.className='ci'+(vis?' live':'');
+    el.innerHTML=`<div class="cdot" style="background:${col(other.type)};opacity:${vis?1:.3}"></div>
+      <div><div class="clabel" style="opacity:${vis?1:.4}">${dir} ${other.label}</div>
+      <div class="crel">${e.relation.replace(/-/g,' ')}</div>
+      ${!vis?'<div class="chint">zoom in to reveal</div>':''}</div>`;
+    cd.appendChild(el);
   });
-});
+  const srcs=(d.sources||[]).filter(s=>s!=='seed');
+  document.getElementById('psrc').style.display=srcs.length?'block':'none';
+  document.getElementById('psrct').textContent=srcs.join(', ');
+}
 
-document.getElementById('searchbox').addEventListener('input', e => {
-  searchQuery = e.target.value.toLowerCase().trim();
-  selectedNode = null;
-  collapsePanel();
-  buildGraph();
-});
+function closePanel(){document.getElementById('panel').classList.add('collapsed');}
+
+function wireUI(){
+  document.getElementById('btn-in').onclick=()=>zoomTo(levelIdx+1);
+  document.getElementById('btn-out').onclick=()=>zoomTo(levelIdx-1);
+  document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');filter=b.dataset.t;selected=null;closePanel();build();
+  }));
+  document.getElementById('searchbox').addEventListener('input',e=>{
+    query=e.target.value.toLowerCase().trim();selected=null;closePanel();build();
+  });
+  document.getElementById('pclose').addEventListener('click',()=>{selected=null;clearHL();closePanel();});
+}
 
 init();
 </script>
