@@ -25,7 +25,8 @@ html,body{width:100%;height:100%;background:var(--bg);color:var(--text);
 #canvas{flex:1;position:relative;overflow:hidden;}
 svg#graph{width:100%;height:100%;display:block;}
 .node-g{cursor:pointer;}
-.node-g circle,.node-g text{pointer-events:none;}
+.node-g text{pointer-events:none;}
+.node-g circle{pointer-events:all;}
 .edge-line{fill:none;pointer-events:none;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.65}}
 .pulse-ring{animation:pulse 2.8s ease-in-out infinite;fill:none;pointer-events:none;}
@@ -226,8 +227,7 @@ function build(){
     .call(d3.drag()
       .on('start',(ev,d)=>{if(!ev.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y;})
       .on('drag', (ev,d)=>{d.fx=ev.x;d.fy=ev.y;})
-      .on('end',  (ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}))
-    .on('click',(ev,d)=>{ev.stopPropagation();onNodeClick(d);});
+      .on('end',  (ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
 
   ng.filter(d=>d.depth===0).append('circle')
     .attr('class','pulse-ring')
@@ -240,7 +240,9 @@ function build(){
     .attr('fill',d=>col(d.type))
     .attr('fill-opacity',.18)
     .attr('stroke',d=>col(d.type))
-    .attr('stroke-width',d=>d.depth===0?2.5:1.5);
+    .attr('stroke-width',d=>d.depth===0?2.5:1.5)
+    .on('click',(ev,d)=>{ev.stopPropagation();onNodeClick(d);})
+    .style('cursor','pointer');
 
   ng.append('text')
     .attr('text-anchor','middle')
