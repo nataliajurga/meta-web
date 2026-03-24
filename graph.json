@@ -54,17 +54,18 @@
       "id": "stopping-times",
       "label": "stopping times",
       "type": "concept",
-      "description": "Random variables representing the time at which a stochastic process satisfies a given condition. Fundamental in probability theory and ergodic theory.",
+      "description": "Random or deterministic times defined by first occurrence of an event (e.g. hitting a set), central to local statistical behaviour. Contrasts with mixing times, which describe global distributional convergence.",
       "confidence": "high",
       "sources": [
-        "seed"
+        "seed",
+        "stopping-vs-global-statistics"
       ],
       "added": "2025-03-21",
-      "updated": "2025-03-21",
+      "updated": "2026-03-24",
       "depth": 1,
-      "origin": "seed",
+      "origin": "natalia",
       "centrality": "core",
-      "metaphor": "Like asking when a wandering person first steps into a particular room \u2014 a random clock tied to the path itself."
+      "metaphor": "A stopwatch that only stops when a specific milestone is reached, measuring local trajectory events rather than global averages."
     },
     {
       "id": "lyapunov-exponents",
@@ -514,6 +515,534 @@
       "origin": "chatgpt",
       "centrality": "supporting",
       "metaphor": null
+    },
+    {
+      "id": "critical-orbit-controls-everything",
+      "label": "critical orbit controls everything",
+      "type": "intuition",
+      "depth": 0,
+      "description": "The global dynamics of a quadratic polynomial is governed entirely by the behaviour of its single critical orbit.",
+      "metaphor": "Like a single hinge that determines how an entire folding structure moves.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "escape-vs-feedback-dichotomy",
+      "label": "escape vs feedback dichotomy",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Dynamics splits into two regimes: escape leads to no feedback and simple expansion, while boundedness creates feedback and complex structure.",
+      "metaphor": "Like heat dissipating into space versus being trapped and recycled in a closed system.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "expansion-needs-no-recurrence",
+      "label": "expansion needs no recurrence",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Uniform expansion occurs precisely when the critical orbit does not return to influence the system.",
+      "metaphor": "Like a flow that keeps stretching without ever folding back on itself.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "recurrence-creates-structure",
+      "label": "recurrence creates structure",
+      "type": "intuition",
+      "depth": 0,
+      "description": "When the critical orbit is bounded and recurrent, it continuously injects complexity, producing connected and structured dynamics.",
+      "metaphor": "Like repeatedly folding dough to build layers.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "parabolic-incompatible-with-disconnection",
+      "label": "parabolic incompatible with disconnection",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Parabolic behaviour requires critical recurrence, which is incompatible with totally disconnected Julia sets.",
+      "metaphor": "A fixed point that traps motion cannot coexist with a system where everything flies apart.",
+      "origin": "natalia",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "quadratic-polynomial-dynamics",
+      "label": "quadratic polynomial dynamics",
+      "type": "concept",
+      "depth": 1,
+      "description": "Iteration of maps f_c(z) = z\u00b2 + c, where all dynamical complexity is controlled by a single critical point.",
+      "metaphor": "A machine with one key lever \u2014 the critical orbit \u2014 controlling all behaviour.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "critical-orbit",
+      "label": "critical orbit",
+      "type": "concept",
+      "depth": 1,
+      "description": "The forward orbit of the critical point of a map, which determines global dynamical behaviour in one-dimensional complex dynamics.",
+      "metaphor": "The source of all folding and complexity \u2014 the one trajectory that decides everything.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "julia-set",
+      "label": "Julia set",
+      "type": "concept",
+      "depth": 1,
+      "description": "The boundary between stable and chaotic dynamics, whose geometry directly reflects the behaviour of the critical orbit.",
+      "metaphor": "The visible shadow of the system's instability \u2014 connected when the critical orbit is trapped, dust when it escapes.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "fatou-set",
+      "label": "Fatou set",
+      "type": "concept",
+      "depth": 1,
+      "description": "The complementary set to the Julia set, consisting of points with stable, predictable long-term behaviour.",
+      "metaphor": "The calm regions surrounding the chaotic boundary.",
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "mandelbrot-set",
+      "label": "Mandelbrot set",
+      "type": "concept",
+      "depth": 1,
+      "description": "The parameter set of c-values for which the critical orbit of f_c remains bounded, equivalently where the Julia set is connected.",
+      "metaphor": "A complete atlas of all possible bounded behaviours, organised by what the critical orbit does.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "uniform-expansion",
+      "label": "uniform expansion",
+      "type": "concept",
+      "depth": 1,
+      "description": "A dynamical regime where all derivatives grow exponentially, yielding hyperbolic behaviour on the Julia set.",
+      "metaphor": "A rubber sheet being stretched evenly everywhere with no folding.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "parabolic-cycle",
+      "label": "parabolic cycle",
+      "type": "concept",
+      "depth": 1,
+      "description": "A periodic point with multiplier exactly 1, where expansion breaks down and the system exhibits delicate parabolic behaviour.",
+      "metaphor": "A point where motion neither escapes nor contracts but lingers indefinitely.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "q-symbolic-dynamics",
+      "label": "symbolic dynamics interpretation?",
+      "type": "question",
+      "depth": 2,
+      "description": "How does the escape vs bounded dichotomy translate into symbolic dynamics \u2014 kneading theory or pruning?",
+      "metaphor": null,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "medium",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "douady-hubbard",
+      "label": "Douady\u2013Hubbard theory",
+      "type": "paper",
+      "depth": 2,
+      "description": "Foundational theory establishing the link between critical orbits, the Mandelbrot set, and Julia set connectivity.",
+      "metaphor": null,
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "critical-orbit-global-dynamics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "stopping-vs-averaging-dichotomy",
+      "label": "stopping vs averaging dichotomy",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Stopping times describe event-based, trajectory-level behaviour; mixing and limit theorems describe averaged asymptotic behaviour over the whole system.",
+      "metaphor": "Asking when you reach a destination versus asking what traffic looks like on average across the city.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "harmonic-functions-encode-stopping",
+      "label": "harmonic functions encode stopping data",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Harmonic functions naturally encode hitting probabilities and expected stopping times through mean-value and Poisson equations.",
+      "metaphor": "A temperature field where the value at each point already contains the likelihood of where heat will eventually flow.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "electrical-flows-mirror-random-walks",
+      "label": "electrical flows mirror random walks",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Electrical quantities \u2014 current, voltage, resistance \u2014 directly correspond to expected traversal behaviour and stopping statistics of random walks.",
+      "metaphor": "A random walker behaves like electrical current spreading through a circuit, favouring low-resistance paths.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "global-vs-local-statistics-split",
+      "label": "global vs local statistics split",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Global statistical properties arise from distributional convergence across the space; local properties arise from first-passage events and pointwise fluctuations.",
+      "metaphor": "Climate versus weather \u2014 long-run averages versus what happens at a specific place and time.",
+      "origin": "natalia",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "variational-principles-unify",
+      "label": "variational principles unify structures",
+      "type": "intuition",
+      "depth": 0,
+      "description": "Both thermodynamic and electrical frameworks are governed by optimisation principles, suggesting a shared structural language for dynamics and probability.",
+      "metaphor": "Different physical systems all settling into the most economical configuration under their own rules.",
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "medium",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "mixing-time",
+      "label": "mixing time",
+      "type": "concept",
+      "depth": 1,
+      "description": "The timescale over which a system's distribution approaches its invariant measure, capturing global convergence speed.",
+      "metaphor": "How long it takes for dye dropped in water to become uniformly spread.",
+      "origin": "natalia",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "cover-time",
+      "label": "cover time",
+      "type": "concept",
+      "depth": 1,
+      "description": "The expected time for a random walk to visit all vertices of a graph.",
+      "metaphor": "Time needed to explore every room in a building at least once.",
+      "origin": "natalia",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "blanket-time",
+      "label": "blanket time",
+      "type": "concept",
+      "depth": 1,
+      "description": "The time until empirical visitation frequencies approximate the stationary distribution.",
+      "metaphor": "When your travel history starts to look like a fair sampling of the whole city.",
+      "origin": "natalia",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "harmonic-functions-graph",
+      "label": "harmonic functions (graph)",
+      "type": "concept",
+      "depth": 1,
+      "description": "Functions satisfying a mean-value property on graphs, encoding hitting probabilities and solving boundary value problems.",
+      "metaphor": "A perfectly balanced surface where each point's value is determined entirely by its neighbours.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "electrical-network-theory",
+      "label": "electrical network theory",
+      "type": "concept",
+      "depth": 1,
+      "description": "Framework translating graph-based random walks into flows, voltages, and resistances, enabling exact computation of stopping statistics.",
+      "metaphor": "Viewing a graph as a circuit where random movement follows energy-efficient pathways.",
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "effective-resistance",
+      "label": "effective resistance",
+      "type": "concept",
+      "depth": 1,
+      "description": "A metric on graphs governing commute times and accessibility; the resistance between two nodes equals their expected commute time.",
+      "metaphor": "How hard it is for current \u2014 or a random walker \u2014 to travel between two points.",
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "graph-laplacian",
+      "label": "graph Laplacian",
+      "type": "concept",
+      "depth": 1,
+      "description": "The discrete operator governing harmonicity and diffusion on graphs, analogous to but distinct from the Laplace\u2013Beltrami operator on manifolds.",
+      "metaphor": "A discrete curvature measuring how each point differs from the average of its neighbours.",
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "transfer-operator",
+      "label": "transfer operator",
+      "type": "concept",
+      "depth": 1,
+      "description": "Operator describing the evolution of densities under a dynamical system; the engine of thermodynamic formalism.",
+      "metaphor": "A machine that redistributes mass according to how the system stretches and folds space.",
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "thermodynamic-formalism",
+      "label": "thermodynamic formalism",
+      "type": "concept",
+      "depth": 1,
+      "description": "Framework relating entropy, pressure, and invariant measures via variational principles; foundational for ergodic theory and multifractal analysis.",
+      "metaphor": "Assigning energy and temperature to orbits to understand their long-run statistical behaviour.",
+      "origin": "natalia",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "q-electrical-for-dynamics",
+      "label": "electrical formalism for dynamics?",
+      "type": "question",
+      "depth": 2,
+      "description": "Can electrical network concepts \u2014 resistance, flow, harmonicity \u2014 be systematically translated into a framework for dynamical systems and their stopping-time analogues?",
+      "metaphor": null,
+      "origin": "natalia",
+      "centrality": "core",
+      "confidence": "medium",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "q-harmonic-return-times",
+      "label": "harmonic approach to return times?",
+      "type": "question",
+      "depth": 2,
+      "description": "Can return times in deterministic dynamical systems be characterised via harmonic or Poisson-type equations analogous to those in random walks?",
+      "metaphor": null,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "medium",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "q-dynamical-resistance",
+      "label": "dynamical resistance metric?",
+      "type": "question",
+      "depth": 2,
+      "description": "Is there a notion of effective resistance in dynamical systems capturing orbit connectivity or transport difficulty?",
+      "metaphor": null,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "medium",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "doyle-snell",
+      "label": "Doyle & Snell \u2014 Random Walks and Electric Networks",
+      "type": "paper",
+      "depth": 2,
+      "description": "Establishes the core correspondence between electrical networks and random walks; foundational text.",
+      "metaphor": null,
+      "origin": "chatgpt",
+      "centrality": "core",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
+    },
+    {
+      "id": "aldous-fill",
+      "label": "Aldous & Fill (monograph)",
+      "type": "paper",
+      "depth": 2,
+      "description": "Comprehensive reference for hitting times, mixing, and electrical methods in Markov chains.",
+      "metaphor": null,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "confidence": "high",
+      "sources": [
+        "stopping-vs-global-statistics"
+      ],
+      "added": "2026-03-24",
+      "updated": "2026-03-24"
     }
   ],
   "edges": [
@@ -813,10 +1342,343 @@
       "confidence": "high",
       "added": "2026-03-22",
       "sentence": "The intuition that spectrum acts as compressed geometry is directly instantiated by the Laplacian spectrum, which preserves some geometric invariants while losing others."
+    },
+    {
+      "source": "critical-orbit-controls-everything",
+      "target": "quadratic-polynomial-dynamics",
+      "relation": "is-context-for",
+      "sentence": "The intuition that the critical orbit controls everything is instantiated most sharply in quadratic polynomial dynamics, where there is only one critical point.",
+      "explanation": "The intuition that the critical orbit controls everything is instantiated most sharply in quadratic polynomial dynamics, where there is only one critical point.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "escape-vs-feedback-dichotomy",
+      "target": "uniform-expansion",
+      "relation": "is-analogous-to",
+      "sentence": "The escape vs feedback dichotomy is analogous to uniform expansion: escape removes recurrence, which is precisely the condition for hyperbolicity.",
+      "explanation": "The escape vs feedback dichotomy is analogous to uniform expansion: escape removes recurrence, which is precisely the condition for hyperbolicity.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "recurrence-creates-structure",
+      "target": "uniform-expansion",
+      "relation": "is-in-tension-with",
+      "sentence": "Recurrence creates structure is in tension with uniform expansion \u2014 recurrence forces the breakdown of uniform hyperbolicity.",
+      "explanation": "Recurrence creates structure is in tension with uniform expansion \u2014 recurrence forces the breakdown of uniform hyperbolicity.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "parabolic-incompatible-with-disconnection",
+      "target": "mandelbrot-set",
+      "relation": "is-context-for",
+      "sentence": "Parabolic incompatible with disconnection is grounded in Mandelbrot set theory: parabolic behaviour implies bounded critical orbit, hence membership in the Mandelbrot set.",
+      "explanation": "Parabolic incompatible with disconnection is grounded in Mandelbrot set theory: parabolic behaviour implies bounded critical orbit, hence membership in the Mandelbrot set.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "critical-orbit",
+      "target": "julia-set",
+      "relation": "is-context-for",
+      "sentence": "The critical orbit determines the Julia set: it is connected precisely when the critical orbit is bounded.",
+      "explanation": "The critical orbit determines the Julia set: it is connected precisely when the critical orbit is bounded.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "critical-orbit",
+      "target": "mandelbrot-set",
+      "relation": "is-context-for",
+      "sentence": "The Mandelbrot set is defined by the fate of the critical orbit \u2014 membership means the orbit remains bounded.",
+      "explanation": "The Mandelbrot set is defined by the fate of the critical orbit \u2014 membership means the orbit remains bounded.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "julia-set",
+      "target": "fatou-set",
+      "relation": "is-context-for",
+      "sentence": "The Julia set and Fatou set are complementary partitions of the Riemann sphere \u2014 the Julia set is the boundary of the Fatou set.",
+      "explanation": "The Julia set and Fatou set are complementary partitions of the Riemann sphere \u2014 the Julia set is the boundary of the Fatou set.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "parabolic-cycle",
+      "target": "parabolic-dynamics",
+      "relation": "is-context-for",
+      "sentence": "Parabolic cycles are the prototypical local feature of parabolic dynamics in complex analysis \u2014 they are the points where the parabolic regime is realised.",
+      "explanation": "Parabolic cycles are the prototypical local feature of parabolic dynamics in complex analysis \u2014 they are the points where the parabolic regime is realised.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "douady-hubbard",
+      "target": "mandelbrot-set",
+      "relation": "is-context-for",
+      "sentence": "Douady\u2013Hubbard theory is the foundational context for the Mandelbrot set, establishing the equivalence between critical orbit boundedness and Julia set connectivity.",
+      "explanation": "Douady\u2013Hubbard theory is the foundational context for the Mandelbrot set, establishing the equivalence between critical orbit boundedness and Julia set connectivity.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "q-symbolic-dynamics",
+      "target": "critical-orbit",
+      "relation": "is-context-for",
+      "sentence": "The question about symbolic dynamics interpretation asks how the fate of the critical orbit translates into combinatorial models.",
+      "explanation": "The question about symbolic dynamics interpretation asks how the fate of the critical orbit translates into combinatorial models.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "mandelbrot-set",
+      "target": "parameter-space-fractals",
+      "relation": "is-context-for",
+      "sentence": "The Mandelbrot set is the canonical example of the parameter-space fractals intuition in complex dynamics \u2014 its fractal boundary encodes all possible critical orbit behaviours. (inferred)",
+      "explanation": "The Mandelbrot set is the canonical example of the parameter-space fractals intuition in complex dynamics \u2014 its fractal boundary encodes all possible critical orbit behaviours. (inferred)",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "julia-set",
+      "target": "dynamics-vs-renormalisation-duality",
+      "relation": "is-context-for",
+      "sentence": "Julia set connectivity is the phase-space face of the dynamics vs renormalisation duality \u2014 connected vs disconnected reflects whether complexity is concentrated in phase space or renormalisation. (inferred)",
+      "explanation": "Julia set connectivity is the phase-space face of the dynamics vs renormalisation duality \u2014 connected vs disconnected reflects whether complexity is concentrated in phase space or renormalisation. (inferred)",
+      "confidence": "medium",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "parabolic-cycle",
+      "target": "lyapunov-exponents",
+      "relation": "is-context-for",
+      "sentence": "Parabolic cycles are characterised by zero Lyapunov exponents \u2014 they are precisely the dynamical configurations where exponential divergence breaks down. (inferred)",
+      "explanation": "Parabolic cycles are characterised by zero Lyapunov exponents \u2014 they are precisely the dynamical configurations where exponential divergence breaks down. (inferred)",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "harmonic-functions-graph",
+      "target": "stopping-times",
+      "relation": "is-tool-for",
+      "sentence": "Harmonic functions on graphs are a tool for computing stopping times \u2014 they solve the boundary value problems encoding hitting probabilities and expected stopping times.",
+      "explanation": "Harmonic functions on graphs are a tool for computing stopping times \u2014 they solve the boundary value problems encoding hitting probabilities and expected stopping times.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "electrical-network-theory",
+      "target": "cover-time",
+      "relation": "is-tool-for",
+      "sentence": "Electrical network theory is a tool for bounding cover times \u2014 resistance and flow estimates provide sharp bounds on graph exploration times.",
+      "explanation": "Electrical network theory is a tool for bounding cover times \u2014 resistance and flow estimates provide sharp bounds on graph exploration times.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "effective-resistance",
+      "target": "mixing-time",
+      "relation": "is-tool-for",
+      "sentence": "Effective resistance is a tool for understanding mixing time \u2014 low resistance between nodes correlates with rapid spreading and fast mixing.",
+      "explanation": "Effective resistance is a tool for understanding mixing time \u2014 low resistance between nodes correlates with rapid spreading and fast mixing.",
+      "confidence": "medium",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "stopping-times",
+      "target": "mixing-time",
+      "relation": "is-in-tension-with",
+      "sentence": "Stopping times are in tension with mixing time \u2014 one focuses on the first occurrence of specific events while the other captures distributional convergence across the whole system.",
+      "explanation": "Stopping times are in tension with mixing time \u2014 one focuses on the first occurrence of specific events while the other captures distributional convergence across the whole system.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "transfer-operator",
+      "target": "graph-laplacian",
+      "relation": "is-analogous-to",
+      "sentence": "The transfer operator is analogous to the graph Laplacian \u2014 both describe how distributions evolve toward equilibrium, one for densities under a dynamical system and one for functions on a graph.",
+      "explanation": "The transfer operator is analogous to the graph Laplacian \u2014 both describe how distributions evolve toward equilibrium, one for densities under a dynamical system and one for functions on a graph.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "thermodynamic-formalism",
+      "target": "electrical-network-theory",
+      "relation": "is-analogous-to",
+      "sentence": "Thermodynamic formalism is analogous to electrical network theory \u2014 both are governed by variational principles, pressure minimisation in one case and energy minimisation in the other.",
+      "explanation": "Thermodynamic formalism is analogous to electrical network theory \u2014 both are governed by variational principles, pressure minimisation in one case and energy minimisation in the other.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "blanket-time",
+      "target": "mixing-time",
+      "relation": "unexpectedly-relates-to",
+      "sentence": "Blanket time unexpectedly relates to mixing time \u2014 it links trajectory-level sampling behaviour to global distributional convergence in a precise quantitative sense.",
+      "explanation": "Blanket time unexpectedly relates to mixing time \u2014 it links trajectory-level sampling behaviour to global distributional convergence in a precise quantitative sense.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "stopping-vs-averaging-dichotomy",
+      "target": "stopping-times",
+      "relation": "is-context-for",
+      "sentence": "The stopping vs averaging dichotomy is the conceptual context for stopping times, capturing the contrast between local event-based statistics and global averages.",
+      "explanation": "The stopping vs averaging dichotomy is the conceptual context for stopping times, capturing the contrast between local event-based statistics and global averages.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "stopping-vs-averaging-dichotomy",
+      "target": "mixing-time",
+      "relation": "is-context-for",
+      "sentence": "The stopping vs averaging dichotomy is the conceptual context for mixing time, placing it on the global averaging side of the split.",
+      "explanation": "The stopping vs averaging dichotomy is the conceptual context for mixing time, placing it on the global averaging side of the split.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "global-vs-local-statistics-split",
+      "target": "stopping-times",
+      "relation": "is-context-for",
+      "sentence": "The global vs local statistics split is instantiated by stopping times as the local side \u2014 first-passage events are pointwise, trajectory-level phenomena.",
+      "explanation": "The global vs local statistics split is instantiated by stopping times as the local side \u2014 first-passage events are pointwise, trajectory-level phenomena.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "global-vs-local-statistics-split",
+      "target": "mixing-time",
+      "relation": "is-context-for",
+      "sentence": "The global vs local statistics split is instantiated by mixing time as the global side \u2014 it measures distributional convergence across the whole space.",
+      "explanation": "The global vs local statistics split is instantiated by mixing time as the global side \u2014 it measures distributional convergence across the whole space.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "harmonic-functions-encode-stopping",
+      "target": "harmonic-functions-graph",
+      "relation": "is-context-for",
+      "sentence": "The intuition that harmonic functions encode stopping data is concretely instantiated by harmonic functions on graphs, which solve Dirichlet problems for hitting probabilities.",
+      "explanation": "The intuition that harmonic functions encode stopping data is concretely instantiated by harmonic functions on graphs, which solve Dirichlet problems for hitting probabilities.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "electrical-flows-mirror-random-walks",
+      "target": "electrical-network-theory",
+      "relation": "is-context-for",
+      "sentence": "The intuition that electrical flows mirror random walks is the conceptual core of electrical network theory as applied to Markov chains.",
+      "explanation": "The intuition that electrical flows mirror random walks is the conceptual core of electrical network theory as applied to Markov chains.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "variational-principles-unify",
+      "target": "thermodynamic-formalism",
+      "relation": "is-context-for",
+      "sentence": "The variational principles intuition is exemplified by thermodynamic formalism, which defines pressure and equilibrium measures via a variational principle.",
+      "explanation": "The variational principles intuition is exemplified by thermodynamic formalism, which defines pressure and equilibrium measures via a variational principle.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "variational-principles-unify",
+      "target": "electrical-network-theory",
+      "relation": "is-context-for",
+      "sentence": "The variational principles intuition is exemplified by electrical network theory, where Kirchhoff's laws emerge from energy minimisation.",
+      "explanation": "The variational principles intuition is exemplified by electrical network theory, where Kirchhoff's laws emerge from energy minimisation.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "q-electrical-for-dynamics",
+      "target": "electrical-network-theory",
+      "relation": "is-context-for",
+      "sentence": "The question about electrical formalism for dynamics asks whether electrical network theory can be extended to deterministic dynamical systems.",
+      "explanation": "The question about electrical formalism for dynamics asks whether electrical network theory can be extended to deterministic dynamical systems.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "q-electrical-for-dynamics",
+      "target": "stopping-times",
+      "relation": "is-context-for",
+      "sentence": "The question about electrical formalism for dynamics specifically targets stopping-time analogues in dynamical systems.",
+      "explanation": "The question about electrical formalism for dynamics specifically targets stopping-time analogues in dynamical systems.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "q-harmonic-return-times",
+      "target": "harmonic-functions-graph",
+      "relation": "is-context-for",
+      "sentence": "The question about harmonic approach to return times asks whether harmonic function methods extend from random walks to deterministic recurrence.",
+      "explanation": "The question about harmonic approach to return times asks whether harmonic function methods extend from random walks to deterministic recurrence.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "q-dynamical-resistance",
+      "target": "effective-resistance",
+      "relation": "is-context-for",
+      "sentence": "The question about a dynamical resistance metric asks whether effective resistance has a meaningful analogue in dynamical systems.",
+      "explanation": "The question about a dynamical resistance metric asks whether effective resistance has a meaningful analogue in dynamical systems.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "doyle-snell",
+      "target": "electrical-network-theory",
+      "relation": "is-context-for",
+      "sentence": "Doyle & Snell is the foundational reference establishing electrical network theory as a tool for random walk analysis.",
+      "explanation": "Doyle & Snell is the foundational reference establishing electrical network theory as a tool for random walk analysis.",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "thermodynamic-formalism",
+      "target": "multifractal-analysis",
+      "relation": "is-tool-for",
+      "sentence": "Thermodynamic formalism is a primary tool for multifractal analysis \u2014 the multifractal spectrum is computed via pressure functions and equilibrium measures. (inferred)",
+      "explanation": "Thermodynamic formalism is a primary tool for multifractal analysis \u2014 the multifractal spectrum is computed via pressure functions and equilibrium measures. (inferred)",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "transfer-operator",
+      "target": "thermodynamic-formalism",
+      "relation": "is-tool-for",
+      "sentence": "The transfer operator is the engine of thermodynamic formalism \u2014 equilibrium measures and pressure are computed as spectral data of the transfer operator. (inferred)",
+      "explanation": "The transfer operator is the engine of thermodynamic formalism \u2014 equilibrium measures and pressure are computed as spectral data of the transfer operator. (inferred)",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "graph-laplacian",
+      "target": "laplacian-spectrum",
+      "relation": "is-analogous-to",
+      "sentence": "The graph Laplacian is analogous to the Laplace\u2013Beltrami operator whose eigenvalues form the Laplacian spectrum \u2014 one is discrete, the other continuous. (inferred)",
+      "explanation": "The graph Laplacian is analogous to the Laplace\u2013Beltrami operator whose eigenvalues form the Laplacian spectrum \u2014 one is discrete, the other continuous. (inferred)",
+      "confidence": "high",
+      "added": "2026-03-24"
+    },
+    {
+      "source": "harmonic-functions-graph",
+      "target": "spectral-geometry",
+      "relation": "is-analogous-to",
+      "sentence": "Harmonic functions on graphs are analogous to harmonic analysis in spectral geometry \u2014 both use eigenfunctions of a Laplacian to encode geometric and probabilistic information. (inferred)",
+      "explanation": "Harmonic functions on graphs are analogous to harmonic analysis in spectral geometry \u2014 both use eigenfunctions of a Laplacian to encode geometric and probabilistic information. (inferred)",
+      "confidence": "medium",
+      "added": "2026-03-24"
     }
   ],
   "meta": {
-    "last_updated": "2026-03-22",
-    "total_chats": 1
+    "last_updated": "2026-03-24",
+    "total_chats": 3
   }
 }
