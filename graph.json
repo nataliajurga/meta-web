@@ -12,7 +12,10 @@
       ],
       "added": "2025-03-21",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "seed",
+      "centrality": "core",
+      "metaphor": "Like a river that meanders rather than cascades \u2014 motion exists but without the dramatic divergence of turbulence."
     },
     {
       "id": "random-matrix-products",
@@ -25,7 +28,10 @@
       ],
       "added": "2025-03-21",
       "updated": "2025-03-21",
-      "depth": 1
+      "depth": 1,
+      "origin": "seed",
+      "centrality": "core",
+      "metaphor": "Like repeatedly multiplying distorted maps of space \u2014 small distortions compound into something statistically predictable."
     },
     {
       "id": "multifractal-analysis",
@@ -39,7 +45,10 @@
       ],
       "added": "2025-03-21",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "seed",
+      "centrality": "core",
+      "metaphor": "Like measuring a coastline at every possible scale simultaneously, and asking how the roughness changes."
     },
     {
       "id": "stopping-times",
@@ -52,7 +61,10 @@
       ],
       "added": "2025-03-21",
       "updated": "2025-03-21",
-      "depth": 1
+      "depth": 1,
+      "origin": "seed",
+      "centrality": "core",
+      "metaphor": "Like asking when a wandering person first steps into a particular room \u2014 a random clock tied to the path itself."
     },
     {
       "id": "lyapunov-exponents",
@@ -66,7 +78,10 @@
       ],
       "added": "2025-03-21",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "seed",
+      "centrality": "core",
+      "metaphor": "Like measuring how fast two nearly-identical weather forecasts diverge \u2014 the rate at which small errors become big ones."
     },
     {
       "id": "spectrum-as-compressed-geometry",
@@ -79,7 +94,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 0
+      "depth": 0,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like a musical chord that encodes the shape of an instrument \u2014 you can hear something about the geometry without seeing it."
     },
     {
       "id": "dynamics-vs-renormalisation-duality",
@@ -92,7 +110,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 0
+      "depth": 0,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like a sculpture that looks simple from far away but reveals intricate structure only in the tooling process, not the final form."
     },
     {
       "id": "infinite-renormalisation-as-irreducibility",
@@ -105,7 +126,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 0
+      "depth": 0,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like a fractal that always reveals new structure when you zoom in \u2014 it refuses to resolve into something simpler."
     },
     {
       "id": "wave-particle-dual-encoding",
@@ -118,7 +142,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 0
+      "depth": 0,
+      "origin": "natalia",
+      "centrality": "supporting",
+      "metaphor": "Like hearing the drumbeat of footsteps through a wall \u2014 the wave carries information about the discrete thing that created it."
     },
     {
       "id": "parameter-space-fractals",
@@ -131,7 +158,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 0
+      "depth": 0,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like finding that the map of possible routes is more intricate than any single journey \u2014 the complexity lives in the choice space, not the path."
     },
     {
       "id": "spectral-geometry",
@@ -144,7 +174,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "core",
+      "metaphor": "Like asking whether you can reconstruct a drum from its sound alone \u2014 using frequencies to infer shape."
     },
     {
       "id": "laplacian-spectrum",
@@ -157,7 +190,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": "Like the natural frequencies of a shape \u2014 the tones it would ring at if struck."
     },
     {
       "id": "billiard-flow",
@@ -170,7 +206,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": "Like a snooker ball on a frictionless table with perfectly elastic walls, studied over infinite time."
     },
     {
       "id": "trace-formula",
@@ -183,7 +222,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": "Like a dictionary between two languages \u2014 each entry on the spectral side corresponds to an entry on the orbit side."
     },
     {
       "id": "polygonal-billiards",
@@ -196,7 +238,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like billiards on a table with straight walls but awkward corners \u2014 the corners create the difficulty."
     },
     {
       "id": "translation-surface",
@@ -209,7 +254,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": "Like unfolding a mirror-maze into a flat surface by keeping track of where each reflection glues to."
     },
     {
       "id": "iet",
@@ -222,7 +270,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like cutting a ribbon into pieces and rearranging them in a fixed order \u2014 a piecewise rigid shuffle."
     },
     {
       "id": "rauzy-induction",
@@ -235,7 +286,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": "Like the Euclidean algorithm for rhythms \u2014 repeatedly subtracting the smaller from the larger to reveal the irreducible pattern."
     },
     {
       "id": "teichmuller-flow",
@@ -248,7 +302,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": "Like stretching a rubber sheet in one direction while compressing in another, and watching how the geometry deforms."
     },
     {
       "id": "rauzy-gasket",
@@ -261,7 +318,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "natalia",
+      "centrality": "supporting",
+      "metaphor": "Like the Cantor set but for three-interval shuffles \u2014 the set of all patterns that never simplify under renormalisation."
     },
     {
       "id": "continued-fractions",
@@ -274,7 +334,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": "Like peeling an onion of approximations \u2014 each step reveals how well a number is approximated by rationals at that scale."
     },
     {
       "id": "kontsevich-zorich-cocycle",
@@ -287,7 +350,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "peripheral",
+      "metaphor": "Like tracking how a vector rotates and stretches as you follow the Teichm\u00fcller flow \u2014 a bookkeeping device for deviation."
     },
     {
       "id": "substitution-tilings",
@@ -300,7 +366,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 1
+      "depth": 1,
+      "origin": "chatgpt",
+      "centrality": "peripheral",
+      "metaphor": "Like a sentence generated by a grammar that replaces each word with a fixed phrase \u2014 the pattern repeats at every scale."
     },
     {
       "id": "q-multifractality-rauzy",
@@ -313,7 +382,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "natalia",
+      "centrality": "core",
+      "metaphor": null
     },
     {
       "id": "q-spectral-polygonal",
@@ -326,7 +398,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "natalia",
+      "centrality": "supporting",
+      "metaphor": null
     },
     {
       "id": "q-translation-aperiodic",
@@ -339,7 +414,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "natalia",
+      "centrality": "supporting",
+      "metaphor": null
     },
     {
       "id": "q-bounded-rauzy",
@@ -352,7 +430,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "natalia",
+      "centrality": "supporting",
+      "metaphor": null
     },
     {
       "id": "kac-1966",
@@ -365,7 +446,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": null
     },
     {
       "id": "gordon-webb-wolpert-1992",
@@ -378,7 +462,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "chatgpt",
+      "centrality": "peripheral",
+      "metaphor": null
     },
     {
       "id": "weyl",
@@ -391,7 +478,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "chatgpt",
+      "centrality": "peripheral",
+      "metaphor": null
     },
     {
       "id": "masur-veech",
@@ -404,7 +494,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": null
     },
     {
       "id": "gutzwiller-trace",
@@ -417,7 +510,10 @@
       ],
       "added": "2026-03-22",
       "updated": "2026-03-22",
-      "depth": 2
+      "depth": 2,
+      "origin": "chatgpt",
+      "centrality": "supporting",
+      "metaphor": null
     }
   ],
   "edges": [
@@ -427,7 +523,8 @@
       "relation": "is-context-for",
       "explanation": "Lyapunov exponents are the primary quantities computed from random matrix products via the Furstenberg\u2013Kesten theorem.",
       "confidence": "high",
-      "added": "2025-03-21"
+      "added": "2025-03-21",
+      "sentence": "Random matrix products give rise to Lyapunov exponents via the Furstenberg\u2013Kesten theorem, which governs their almost-sure growth rate."
     },
     {
       "source": "lyapunov-exponents",
@@ -435,7 +532,8 @@
       "relation": "is-tool-for",
       "explanation": "Vanishing or zero Lyapunov exponents characterise the parabolic regime; understanding them is central to parabolic dynamics.",
       "confidence": "high",
-      "added": "2025-03-21"
+      "added": "2025-03-21",
+      "sentence": "Lyapunov exponents are a key tool for parabolic dynamics, since their vanishing or near-vanishing characterises the parabolic regime."
     },
     {
       "source": "multifractal-analysis",
@@ -443,7 +541,8 @@
       "relation": "is-tool-for",
       "explanation": "Multifractal spectra of Lyapunov exponents describe the fine structure of hyperbolic and partially hyperbolic systems.",
       "confidence": "high",
-      "added": "2025-03-21"
+      "added": "2025-03-21",
+      "sentence": "Multifractal analysis is a tool for studying Lyapunov exponents, describing the dimensional structure of their level sets."
     },
     {
       "source": "stopping-times",
@@ -451,7 +550,8 @@
       "relation": "is-tool-for",
       "explanation": "Return time statistics and inducing schemes use stopping times to convert parabolic systems into more tractable hyperbolic ones.",
       "confidence": "medium",
-      "added": "2025-03-21"
+      "added": "2025-03-21",
+      "sentence": "Stopping times are used in parabolic dynamics via inducing schemes, converting slow systems into faster hyperbolic ones."
     },
     {
       "source": "spectrum-as-compressed-geometry",
@@ -459,7 +559,8 @@
       "relation": "is-analogous-to",
       "explanation": "Both encode complex structure via compressed representations \u2014 spectral frequencies versus renormalisation sequences.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Spectrum as compressed geometry is analogous to Rauzy induction \u2014 both encode complex structure into a compressed representation, one via frequencies and one via renormalisation sequences."
     },
     {
       "source": "billiard-flow",
@@ -467,7 +568,8 @@
       "relation": "is-tool-for",
       "explanation": "Periodic billiard trajectories determine spectral features of a domain via trace formulas.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Billiard flow is a tool for spectral geometry, since periodic orbits of the flow determine the domain's spectral features via trace formulas."
     },
     {
       "source": "polygonal-billiards",
@@ -475,7 +577,8 @@
       "relation": "is-analogous-to",
       "explanation": "Directional flows on polygons correspond to IETs via first return maps to transversals.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Polygonal billiards are analogous to interval exchange transformations, connected via first return maps of directional flows."
     },
     {
       "source": "rauzy-induction",
@@ -483,7 +586,8 @@
       "relation": "is-tool-for",
       "explanation": "Rauzy induction acts as a discrete Poincar\u00e9 section of the continuous Teichm\u00fcller flow on moduli space.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Rauzy induction is a tool for studying the Teichm\u00fcller flow, acting as its discrete Poincar\u00e9 section on moduli space."
     },
     {
       "source": "rauzy-gasket",
@@ -491,7 +595,8 @@
       "relation": "is-context-for",
       "explanation": "The Rauzy gasket is the canonical example of a parameter-space fractal arising from infinite renormalisation.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The Rauzy gasket is a concrete instance of the intuition that parameter-space fractals replace phase-space fractals in parabolic systems."
     },
     {
       "source": "continued-fractions",
@@ -499,7 +604,8 @@
       "relation": "is-special-case-of",
       "explanation": "Continued fractions / the Gauss map provide the 1D model for infinite renormalisation; Rauzy induction is the higher-dimensional generalisation.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Continued fractions are a special case of Rauzy induction, providing the one-dimensional model whose higher-dimensional generalisation Rauzy induction constitutes."
     },
     {
       "source": "substitution-tilings",
@@ -507,7 +613,8 @@
       "relation": "unexpectedly-relates-to",
       "explanation": "Both produce fractal structures via repeated scaling rules \u2014 substitution tilings in physical space, the Rauzy gasket in parameter space.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Substitution tilings unexpectedly relate to the Rauzy gasket \u2014 both produce fractal structure through repeated scaling, one in physical space and one in parameter space."
     },
     {
       "source": "infinite-renormalisation-as-irreducibility",
@@ -515,7 +622,8 @@
       "relation": "is-in-tension-with",
       "explanation": "Infinite structure resists finite spectral encoding, highlighting fundamental limits of spectral compression as a description of complex dynamics.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Infinite renormalisation as irreducibility is in tension with spectrum as compressed geometry \u2014 infinite multi-scale structure resists finite spectral encoding."
     },
     {
       "source": "wave-particle-dual-encoding",
@@ -523,7 +631,8 @@
       "relation": "is-context-for",
       "explanation": "Trace formulas are the mathematical formalisation of wave\u2013particle dual encoding: they express spectral sums in terms of periodic orbits.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Wave\u2013particle dual encoding is the intuition formalised by trace formulas, which express spectral sums in terms of classical periodic orbits."
     },
     {
       "source": "gutzwiller-trace",
@@ -531,7 +640,8 @@
       "relation": "is-context-for",
       "explanation": "The Gutzwiller trace formula is the canonical result instantiating wave\u2013particle correspondence for quantum systems.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The Gutzwiller trace formula is a context for the trace formula concept, providing the canonical quantum-classical instance of wave\u2013particle correspondence."
     },
     {
       "source": "kac-1966",
@@ -539,7 +649,8 @@
       "relation": "is-context-for",
       "explanation": "Kac's 1966 paper is the foundational framing of the inverse spectral problem that defines spectral geometry as a field.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Kac's 1966 paper is the foundational context for spectral geometry, posing the inverse spectral problem that defines the field."
     },
     {
       "source": "gordon-webb-wolpert-1992",
@@ -547,7 +658,8 @@
       "relation": "is-context-for",
       "explanation": "Gordon\u2013Webb\u2013Wolpert resolved Kac's question negatively, defining a key boundary of spectral geometry.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Gordon\u2013Webb\u2013Wolpert (1992) is a key result in spectral geometry, resolving Kac's question negatively by constructing isospectral non-isometric domains."
     },
     {
       "source": "masur-veech",
@@ -555,7 +667,8 @@
       "relation": "is-context-for",
       "explanation": "Masur\u2013Veech theory provides the ergodic theory of IETs and translation surfaces, including existence of invariant measures.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Masur\u2013Veech theory is the foundational context for interval exchange transformations, establishing ergodicity and the existence of invariant measures."
     },
     {
       "source": "polygonal-billiards",
@@ -563,7 +676,8 @@
       "relation": "is-context-for",
       "explanation": "Polygonal billiards are a primary example of parabolic dynamics \u2014 polynomial divergence arising from corner singularities.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Polygonal billiards are a primary example of parabolic dynamics, exhibiting polynomial orbit divergence from corner singularities."
     },
     {
       "source": "translation-surface",
@@ -571,7 +685,8 @@
       "relation": "is-tool-for",
       "explanation": "Translation surfaces arise from unfolding rational billiards, converting reflection dynamics into linear flows.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Translation surfaces are a tool for studying polygonal billiards, arising from the unfolding construction that converts reflection dynamics into linear flows."
     },
     {
       "source": "iet",
@@ -579,7 +694,8 @@
       "relation": "is-tool-for",
       "explanation": "IETs encode the first return maps of directional flows on translation surfaces; they are the combinatorial face of the geometric object.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Interval exchange transformations are a tool for translation surfaces, encoding their directional flows as combinatorial first return maps."
     },
     {
       "source": "dynamics-vs-renormalisation-duality",
@@ -587,7 +703,8 @@
       "relation": "is-context-for",
       "explanation": "The intuition directly characterises what makes parabolic dynamics hard: the action is in renormalisation space, not phase space. (inferred)",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The intuition of dynamics vs renormalisation duality is a context for parabolic dynamics \u2014 it explains why the complexity of parabolic systems lives in renormalisation space rather than phase space."
     },
     {
       "source": "rauzy-induction",
@@ -595,7 +712,8 @@
       "relation": "unexpectedly-relates-to",
       "explanation": "An open question asks whether Rauzy induction admits a multifractal formalism analogous to hyperbolic systems \u2014 a potential deep connection. (inferred)",
       "confidence": "speculative",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Rauzy induction unexpectedly relates to multifractal analysis \u2014 an open question asks whether a multifractal formalism analogous to hyperbolic systems exists for Rauzy-type dynamics. (inferred)"
     },
     {
       "source": "lyapunov-exponents",
@@ -603,7 +721,8 @@
       "relation": "is-context-for",
       "explanation": "The Lyapunov exponents of the Kontsevich\u2013Zorich cocycle govern deviation phenomena in translation surface dynamics. (inferred)",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "Lyapunov exponents are a context for the Kontsevich\u2013Zorich cocycle \u2014 the cocycle's Lyapunov spectrum governs deviation phenomena in translation surface dynamics. (inferred)"
     },
     {
       "source": "q-multifractality-rauzy",
@@ -611,7 +730,8 @@
       "relation": "is-context-for",
       "explanation": "The question asks whether multifractal analysis extends to Rauzy-type systems.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about multifractality in Rauzy-type systems directly concerns multifractal analysis and whether its formalism extends beyond the hyperbolic setting."
     },
     {
       "source": "q-multifractality-rauzy",
@@ -619,7 +739,8 @@
       "relation": "is-context-for",
       "explanation": "The question targets Rauzy induction as the system for which a multifractal formalism is sought.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about multifractality in Rauzy-type systems targets Rauzy induction as the system for which a multifractal thermodynamic formalism is sought."
     },
     {
       "source": "q-spectral-polygonal",
@@ -627,7 +748,8 @@
       "relation": "is-context-for",
       "explanation": "The question concerns spectral statistics of polygonal billiards specifically.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about spectral interpretation of polygonal billiards concerns how orbit degeneracies specific to polygonal billiards affect trace formula predictions."
     },
     {
       "source": "q-spectral-polygonal",
@@ -635,7 +757,8 @@
       "relation": "is-context-for",
       "explanation": "The question asks how orbit degeneracies in polygonal billiards affect trace formula predictions.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about spectral interpretation of polygonal billiards asks how orbit degeneracies affect the trace formula in non-hyperbolic settings."
     },
     {
       "source": "q-translation-aperiodic",
@@ -643,7 +766,8 @@
       "relation": "is-context-for",
       "explanation": "The question concerns which translation surfaces exhibit aperiodic order.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about translation surfaces and aperiodic order asks which translation surfaces exhibit genuine quasicrystal-type dynamics."
     },
     {
       "source": "q-translation-aperiodic",
@@ -651,7 +775,8 @@
       "relation": "is-context-for",
       "explanation": "The question connects translation surfaces derived from tiling constructions to aperiodic order.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about translation surfaces and aperiodic order connects translation surfaces derived from substitution tilings to aperiodic order."
     },
     {
       "source": "q-bounded-rauzy",
@@ -659,7 +784,8 @@
       "relation": "is-context-for",
       "explanation": "The question seeks the Rauzy analogue of bounded continued fractions.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about bounded-type analogues in Rauzy dynamics asks for the Rauzy analogue of bounded continued fractions."
     },
     {
       "source": "q-bounded-rauzy",
@@ -667,7 +793,8 @@
       "relation": "is-context-for",
       "explanation": "Bounded continued fractions are the 1D model whose Rauzy analogue the question seeks.",
       "confidence": "medium",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The question about bounded-type analogues in Rauzy dynamics seeks to generalise the theory of bounded continued fractions to the Rauzy setting."
     },
     {
       "source": "laplacian-spectrum",
@@ -675,7 +802,8 @@
       "relation": "is-context-for",
       "explanation": "The Laplacian spectrum is the central object of spectral geometry.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The Laplacian spectrum is the central object of spectral geometry \u2014 it is the collection of eigenvalues whose structure encodes geometric properties of the domain."
     },
     {
       "source": "spectrum-as-compressed-geometry",
@@ -683,7 +811,8 @@
       "relation": "is-context-for",
       "explanation": "The intuition is directly instantiated by the Laplacian spectrum as a compressed encoding of domain geometry.",
       "confidence": "high",
-      "added": "2026-03-22"
+      "added": "2026-03-22",
+      "sentence": "The intuition that spectrum acts as compressed geometry is directly instantiated by the Laplacian spectrum, which preserves some geometric invariants while losing others."
     }
   ],
   "meta": {

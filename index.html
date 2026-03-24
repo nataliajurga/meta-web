@@ -6,45 +6,40 @@
 <title>Natalia's Meta-Web</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg:#faf9f7; --bg2:#f2f0ec; --text:#2c2c2a; --text2:#5f5e5a; --text3:#888780;
-  --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.16);
-  --ci:#534AB7; --cc:#0F6E56; --cq:#993C1D; --cp:#993556; --cn:#5F5E5A;
-  --li:#EEEDFE; --lc:#E1F5EE; --lq:#FAECE7; --lp:#FBEAF0; --ln:#F1EFE8;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#faf9f7;--bg2:#f2f0ec;--text:#2c2c2a;--text2:#5f5e5a;--text3:#888780;
+  --border:rgba(0,0,0,0.09);--border2:rgba(0,0,0,0.16);
+  --ci:#534AB7;--cc:#0F6E56;--cq:#993C1D;--cp:#993556;--cn:#5F5E5A;
+  --li:#EEEDFE;--lc:#E1F5EE;--lq:#FAECE7;--lp:#FBEAF0;--ln:#F1EFE8;
 }
-@media (prefers-color-scheme:dark){:root{
-  --bg:#1c1c1a; --bg2:#252523; --text:#e8e6e0; --text2:#b4b2a9; --text3:#888780;
-  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
-  --ci:#AFA9EC; --cc:#5DCAA5; --cq:#F0997B; --cp:#ED93B1; --cn:#B4B2A9;
-  --li:#26215C; --lc:#04342C; --lq:#4A1B0C; --lp:#4B1528; --ln:#2C2C2A;
+@media(prefers-color-scheme:dark){:root{
+  --bg:#1c1c1a;--bg2:#252523;--text:#e8e6e0;--text2:#b4b2a9;--text3:#888780;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --ci:#AFA9EC;--cc:#5DCAA5;--cq:#F0997B;--cp:#ED93B1;--cn:#B4B2A9;
+  --li:#26215C;--lc:#04342C;--lq:#4A1B0C;--lp:#4B1528;--ln:#2C2C2A;
 }}
 html,body{width:100%;height:100%;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden;}
 #app{display:flex;width:100%;height:100%;}
 #canvas{flex:1;position:relative;overflow:hidden;}
 svg#graph{width:100%;height:100%;display:block;}
-.node-g{cursor:pointer;}
-.node-g text{pointer-events:none;}
-.node-g circle{pointer-events:all;}
 .edge-line{fill:none;pointer-events:none;}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.65}}
-.pulse-ring{animation:pulse 2.8s ease-in-out infinite;fill:none;pointer-events:none;}
+.node-label{pointer-events:none;dominant-baseline:middle;text-anchor:middle;}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.55}}
+.pulse-ring{animation:pulse 3s ease-in-out infinite;fill:none;pointer-events:none;}
 
-/* zoom controls */
-#zoom-bar{
-  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-  display:flex;align-items:center;gap:0;
-  background:var(--bg2);border:1px solid var(--border2);
-  border-radius:24px;overflow:hidden;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.07);
-}
+/* zoom bar */
+#zoom-bar{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;background:var(--bg2);
+  border:1px solid var(--border2);border-radius:24px;overflow:hidden;z-index:20;}
 .zb{background:none;border:none;cursor:pointer;color:var(--text2);
-  font-size:20px;line-height:1;padding:5px 18px;transition:background .12s,color .12s;}
+  font-size:20px;padding:5px 18px;transition:background .12s,color .12s;line-height:1;}
 .zb:hover{background:var(--border);color:var(--text);}
 .zb:disabled{opacity:.25;cursor:default;}
 #zlabel{font-size:11px;color:var(--text3);padding:0 14px;
   border-left:1px solid var(--border2);border-right:1px solid var(--border2);
-  min-width:90px;text-align:center;user-select:none;line-height:32px;}
+  min-width:96px;text-align:center;user-select:none;line-height:32px;}
 
 /* depth pips */
 #pips{position:absolute;top:14px;right:14px;display:flex;gap:5px;align-items:center;}
@@ -55,28 +50,27 @@ svg#graph{width:100%;height:100%;display:block;}
 .pip[data-d="2"].on{background:var(--cq);}
 
 /* panel */
-#panel{width:270px;height:100%;background:var(--bg2);border-left:1px solid var(--border);
+#panel{width:290px;height:100%;background:var(--bg2);border-left:1px solid var(--border);
   display:flex;flex-direction:column;overflow:hidden;transition:width .22s ease;flex-shrink:0;}
 #panel.collapsed{width:0;border:none;}
-#ph{padding:16px 16px 10px;border-bottom:1px solid var(--border);position:relative;}
+#ph{padding:16px 16px 12px;border-bottom:1px solid var(--border);position:relative;}
 #pbadge{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.07em;
   text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-bottom:4px;}
-#pdepth{font-size:9px;color:var(--text3);margin-bottom:3px;}
-#plabel{font-size:14px;font-weight:500;line-height:1.3;}
+#porigin{font-size:9px;color:var(--text3);margin-bottom:3px;}
+#plabel{font-size:15px;font-weight:500;line-height:1.3;color:var(--text);}
 #pclose{position:absolute;top:12px;right:10px;background:none;border:none;
   cursor:pointer;color:var(--text3);font-size:18px;}
 #pclose:hover{color:var(--text);}
 #pb{flex:1;overflow-y:auto;padding:14px 16px 24px;}
-.psec{margin-bottom:16px;}
-.ptitle{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
-.pdesc{font-size:12px;line-height:1.6;color:var(--text2);}
-.ci{display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border-radius:5px;
-  border:1px solid var(--border);background:var(--bg);margin-bottom:5px;}
-.ci.live{cursor:pointer;}.ci.live:hover{border-color:var(--border2);}
-.cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
-.clabel{font-size:11px;font-weight:500;}
-.crel{font-size:10px;color:var(--text3);margin-top:1px;}
-.chint{font-size:10px;color:var(--text3);font-style:italic;margin-top:1px;}
+.psec{margin-bottom:18px;}
+.ptitle{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:6px;}
+.pdesc{font-size:12px;line-height:1.65;color:var(--text2);}
+.pmetaphor{font-size:12px;line-height:1.65;color:var(--text3);font-style:italic;margin-top:6px;}
+.conn-item{padding:7px 9px;border-radius:5px;border:1px solid var(--border);
+  background:var(--bg);margin-bottom:5px;}
+.conn-sent{font-size:12px;line-height:1.5;color:var(--text2);}
+.conn-hint{font-size:10px;color:var(--text3);font-style:italic;margin-top:2px;}
 
 /* toolbar */
 #toolbar{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:6px;z-index:10;}
@@ -91,7 +85,8 @@ svg#graph{width:100%;height:100%;display:block;}
 /* legend */
 #legend{position:absolute;bottom:58px;left:12px;background:var(--bg2);
   border:1px solid var(--border);border-radius:6px;padding:9px 12px;}
-#ltitle{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
+#ltitle{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:7px;}
 .lr{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10px;color:var(--text2);}
 .lr:last-child{margin-bottom:0;}
 .ld{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
@@ -108,6 +103,7 @@ svg#graph{width:100%;height:100%;display:block;}
       </defs>
       <g id="zg"><g id="eg"></g><g id="ng"></g></g>
     </svg>
+
     <div id="toolbar">
       <input id="searchbox" type="text" placeholder="Search…" autocomplete="off"/>
       <div id="filters">
@@ -118,16 +114,19 @@ svg#graph{width:100%;height:100%;display:block;}
         <button class="fb" data-t="paper">papers</button>
       </div>
     </div>
+
     <div id="pips">
       <div class="pip on" data-d="0"></div>
       <div class="pip" data-d="1"></div>
       <div class="pip" data-d="2"></div>
     </div>
+
     <div id="zoom-bar">
       <button class="zb" id="btn-out" disabled>−</button>
       <div id="zlabel">intuitions</div>
       <button class="zb" id="btn-in">+</button>
     </div>
+
     <div id="legend">
       <div id="ltitle">+ reveals</div>
       <div class="lr"><div class="ld" style="background:var(--ci)"></div>intuitions — always</div>
@@ -139,45 +138,65 @@ svg#graph{width:100%;height:100%;display:block;}
   <div id="panel" class="collapsed">
     <div id="ph">
       <div id="pbadge"></div>
-      <div id="pdepth"></div>
+      <div id="porigin"></div>
       <div id="plabel"></div>
       <button id="pclose">×</button>
     </div>
     <div id="pb">
-      <div class="psec"><div class="ptitle">Description</div><div class="pdesc" id="pdesc"></div></div>
-      <div class="psec"><div class="ptitle">Connections</div><div id="pconns"></div></div>
+      <div class="psec">
+        <div class="ptitle">Description</div>
+        <div class="pdesc" id="pdesc"></div>
+        <div class="pmetaphor" id="pmetaphor"></div>
+      </div>
+      <div class="psec">
+        <div class="ptitle">Connections</div>
+        <div id="pconns"></div>
+      </div>
       <div class="psec" id="psrc" style="display:none">
-        <div class="ptitle">From chat</div><div class="pdesc" id="psrct"></div>
+        <div class="ptitle">From chat</div>
+        <div class="pdesc" id="psrct"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const GRAPH_URL = 'graph.json';
+const GRAPH_URL='graph.json';
 const TC={intuition:'var(--ci)',concept:'var(--cc)',question:'var(--cq)',paper:'var(--cp)',person:'var(--cn)'};
 const TL={intuition:'var(--li)',concept:'var(--lc)',question:'var(--lq)',paper:'var(--lp)',person:'var(--ln)'};
-const TR={intuition:20,concept:14,question:11,paper:9,person:9};
 const DL=['fundamental intuition','mathematical concept','open question · reference'];
 const EOP={high:.55,medium:.26,speculative:.1};
-
-/* LOD levels — maxDepth shown, label, zoom multiplier relative to fit scale */
 const LEVELS=[
-  {maxDepth:0, label:'intuitions',  mult:1.0},
-  {maxDepth:1, label:'+ concepts',  mult:1.7},
-  {maxDepth:2, label:'+ questions', mult:2.8},
+  {maxDepth:0,label:'intuitions',mult:1.0},
+  {maxDepth:1,label:'+ concepts',mult:1.7},
+  {maxDepth:2,label:'+ questions',mult:2.8},
 ];
-const MAX_LEVEL = LEVELS.length - 1;
+const MAX_LEVEL=LEVELS.length-1;
 
-let gdata, sim, nsel, esel, zb;
-let levelIdx=0, fitScale=1, fitTx=0, fitTy=0;
-let filter='all', query='', selected=null;
-let simNodes=[], simEdges=[];
+/* importance → base radius
+   origin: natalia=1.0, chatgpt=0.7, seed=0.85
+   centrality: core=1.0, supporting=0.75, peripheral=0.55 */
+function importance(n){
+  const o={natalia:1.0,chatgpt:0.7,seed:0.85}[n.origin]??0.75;
+  const c={core:1.0,supporting:0.75,peripheral:0.55}[n.centrality]??0.75;
+  return o*c;
+}
+function baseRadius(n){
+  /* depth-0 (intuitions) range 22–36, depth-1 (concepts) 10–20, depth-2 8–12 */
+  const imp=importance(n);
+  if((n.depth??0)===0) return 22+imp*14;
+  if((n.depth??0)===1) return 10+imp*10;
+  return 8+imp*4;
+}
+const col =t=>TC[t]||TC.person;
+const lcol=t=>TL[t]||TL.person;
+const md  =()=>LEVELS[levelIdx].maxDepth;
 
-const col  = t => TC[t]||TC.person;
-const lcol = t => TL[t]||TL.person;
-const rad  = t => TR[t]||11;
-const md   = ()=> LEVELS[levelIdx].maxDepth;
+let gdata,sim,nsel,esel,zb;
+let levelIdx=0,fitScale=1,fitTx=0,fitTy=0;
+let filter='all',query='',selected=null;
+let simNodes=[],simEdges=[];
+let currentScale=1;
 
 async function init(){
   const r=await fetch(GRAPH_URL);
@@ -190,7 +209,6 @@ function build(){
   const svg=d3.select('#graph');
   d3.select('#eg').selectAll('*').remove();
   d3.select('#ng').selectAll('*').remove();
-
   const W=document.getElementById('canvas').clientWidth;
   const H=document.getElementById('canvas').clientHeight;
 
@@ -210,11 +228,11 @@ function build(){
   if(sim)sim.stop();
   sim=d3.forceSimulation(simNodes)
     .force('link',d3.forceLink(simEdges).id(d=>d.id)
-      .distance(d=>(80+rad(d.source.type)+rad(d.target.type))*(d.source.depth===d.target.depth?.75:1.2))
-      .strength(.3))
-    .force('charge',d3.forceManyBody().strength(d=>-rad(d.type)*22))
+      .distance(d=>(90+baseRadius(d.source)+baseRadius(d.target))*(d.source.depth===d.target.depth?.8:1.2))
+      .strength(.28))
+    .force('charge',d3.forceManyBody().strength(d=>-baseRadius(d)*26))
     .force('center',d3.forceCenter(W/2,H/2))
-    .force('collide',d3.forceCollide(d=>rad(d.type)+18));
+    .force('collide',d3.forceCollide(d=>baseRadius(d)+16));
 
   esel=d3.select('#eg').selectAll('line').data(simEdges).enter().append('line')
     .attr('class','edge-line')
@@ -223,88 +241,107 @@ function build(){
     .attr('marker-end','url(#arr)');
 
   const ng=d3.select('#ng').selectAll('g').data(simNodes).enter().append('g')
-    .attr('class','node-g')
     .call(d3.drag()
       .on('start',(ev,d)=>{if(!ev.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y;})
       .on('drag', (ev,d)=>{d.fx=ev.x;d.fy=ev.y;})
       .on('end',  (ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
 
-  ng.filter(d=>d.depth===0).append('circle')
+  /* pulse ring for depth-0 only */
+  ng.filter(d=>(d.depth??0)===0).append('circle')
     .attr('class','pulse-ring')
-    .attr('r',d=>rad(d.type)+8)
     .attr('stroke',d=>col(d.type))
     .attr('stroke-width',1.5);
 
   ng.append('circle')
-    .attr('r',d=>rad(d.type))
     .attr('fill',d=>col(d.type))
     .attr('fill-opacity',.18)
     .attr('stroke',d=>col(d.type))
-    .attr('stroke-width',d=>d.depth===0?2.5:1.5)
-    .on('click',(ev,d)=>{ev.stopPropagation();onNodeClick(d);})
-    .style('cursor','pointer');
+    .attr('stroke-width',d=>(d.depth??0)===0?2.5:1.5)
+    .attr('cursor','pointer')
+    .on('click',(ev,d)=>{ev.stopPropagation();onNodeClick(d);});
 
+  /* labels — for depth-0 always show full label; depth-1+ truncate */
   ng.append('text')
-    .attr('text-anchor','middle')
-    .attr('dy',d=>rad(d.type)+14)
-    .style('font-size',d=>d.depth===0?'12px':'10px')
-    .style('font-weight',d=>d.depth===0?'500':'400')
-    .text(d=>d.label.length>24?d.label.slice(0,22)+'…':d.label);
+    .attr('class','node-label')
+    .attr('fill','var(--text)')
+    .style('font-weight',d=>(d.depth??0)===0?'500':'400')
+    .text(d=>{
+      if((d.depth??0)===0) return d.label; /* always full for intuitions */
+      return d.label.length>20?d.label.slice(0,18)+'…':d.label;
+    });
 
   nsel=ng;
 
-  zb=d3.zoom().scaleExtent([.2,8])
+  zb=d3.zoom().scaleExtent([.15,10])
     .on('zoom',ev=>{
+      currentScale=ev.transform.k;
       d3.select('#zg').attr('transform',ev.transform);
-      /* keep levelIdx in sync if user scroll-zooms */
-      const k=ev.transform.k;
+      updateLabelScale(ev.transform.k);
       if(fitScale>0){
-        const rel=k/fitScale;
+        const rel=ev.transform.k/fitScale;
         let li=0;
-        for(let i=0;i<LEVELS.length;i++){if(rel>=LEVELS[i].mult*.95)li=i;}
+        for(let i=0;i<LEVELS.length;i++){if(rel>=LEVELS[i].mult*.9)li=i;}
         if(li!==levelIdx){levelIdx=li;applyLOD();updateUI();}
       }
     });
 
   svg.call(zb).on('click',()=>{selected=null;clearHL();closePanel();});
 
-  /* run sim until it cools, then fit and apply LOD */
   let ticks=0;
   sim.on('tick',()=>{
     ticks++;
     esel
       .attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
-      .attr('x2',d=>{const dx=d.target.x-d.source.x,dy=d.target.y-d.source.y,dist=Math.sqrt(dx*dx+dy*dy)||1;return d.target.x-(dx/dist)*(rad(d.target.type)+3);})
-      .attr('y2',d=>{const dx=d.target.x-d.source.x,dy=d.target.y-d.source.y,dist=Math.sqrt(dx*dx+dy*dy)||1;return d.target.y-(dy/dist)*(rad(d.target.type)+3);});
-    nsel.attr('transform',d=>`translate(${d.x},${d.y})`);
+      .attr('x2',d=>{const dx=d.target.x-d.source.x,dy=d.target.y-d.source.y,dist=Math.sqrt(dx*dx+dy*dy)||1;return d.target.x-(dx/dist)*(baseRadius(d.target)+3);})
+      .attr('y2',d=>{const dx=d.target.x-d.source.x,dy=d.target.y-d.source.y,dist=Math.sqrt(dx*dx+dy*dy)||1;return d.target.y-(dy/dist)*(baseRadius(d.target)+3);});
 
-    /* auto-fit after sim has settled (~120 ticks) */
-    if(ticks===120){
-      fitToScreen();
-      applyLOD();
-      updateUI();
-    }
+    nsel.attr('transform',d=>`translate(${d.x},${d.y})`);
+    /* update radii */
+    nsel.select('circle:not(.pulse-ring)')
+      .attr('r',d=>baseRadius(d));
+    nsel.select('.pulse-ring')
+      .attr('r',d=>baseRadius(d)+10);
+    /* label position below circle */
+    nsel.select('text')
+      .attr('dy',d=>baseRadius(d)+14)
+      .style('font-size',d=>labelSize(d,currentScale)+'px');
+
+    if(ticks===140){fitToScreen();applyLOD();updateUI();}
   });
+}
+
+/* label size: bigger at load (depth-0 = 14px), shrinks as zoom increases so labels stay readable without overlapping */
+function labelSize(d,scale){
+  const s=fitScale>0?scale/fitScale:scale;
+  if((d.depth??0)===0){
+    /* intuitions: start big, shrink gently as you zoom deeper */
+    return Math.max(10, Math.round(14/Math.pow(s,0.4)));
+  }
+  if((d.depth??0)===1) return 10;
+  return 9;
+}
+
+function updateLabelScale(scale){
+  if(!nsel)return;
+  nsel.select('text')
+    .style('font-size',d=>labelSize(d,scale)+'px');
 }
 
 function fitToScreen(){
   const W=document.getElementById('canvas').clientWidth;
   const H=document.getElementById('canvas').clientHeight;
-  const PAD=60;
-
-  /* compute bounding box of ALL nodes */
-  const xs=simNodes.map(n=>n.x);
-  const ys=simNodes.map(n=>n.y);
-  const x0=Math.min(...xs)-PAD, x1=Math.max(...xs)+PAD;
-  const y0=Math.min(...ys)-PAD, y1=Math.max(...ys)+PAD;
-  const bw=x1-x0, bh=y1-y0;
-
-  fitScale=Math.min(W/bw, H/bh, 1.5); /* never zoom in past 1.5× on load */
-  fitTx=W/2-fitScale*(x0+bw/2);
-  fitTy=H/2-fitScale*(y0+bh/2);
-
+  const PAD=70;
+  /* fit only to depth-0 nodes on first load so intuitions fill screen nicely */
+  const top=simNodes.filter(n=>(n.depth??0)===0);
+  const xs=top.map(n=>n.x), ys=top.map(n=>n.y);
+  const x0=Math.min(...xs)-PAD,x1=Math.max(...xs)+PAD;
+  const y0=Math.min(...ys)-PAD,y1=Math.max(...ys)+PAD;
+  fitScale=Math.min(W/(x1-x0),H/(y1-y0),2.0);
+  fitTx=W/2-fitScale*(x0+(x1-x0)/2);
+  fitTy=H/2-fitScale*(y0+(y1-y0)/2);
   const t=d3.zoomIdentity.translate(fitTx,fitTy).scale(fitScale);
-  d3.select('#graph').call(zb.transform, t);
+  d3.select('#graph').call(zb.transform,t);
+  currentScale=fitScale;
 }
 
 function applyLOD(){
@@ -320,9 +357,7 @@ function applyLOD(){
 
 function updateUI(){
   const cur=md();
-  document.querySelectorAll('.pip').forEach(p=>{
-    p.classList.toggle('on',parseInt(p.dataset.d)<=cur);
-  });
+  document.querySelectorAll('.pip').forEach(p=>p.classList.toggle('on',parseInt(p.dataset.d)<=cur));
   document.getElementById('zlabel').textContent=LEVELS[levelIdx].label;
   document.getElementById('btn-out').disabled=levelIdx===0;
   document.getElementById('btn-in').disabled=levelIdx===MAX_LEVEL;
@@ -331,35 +366,18 @@ function updateUI(){
 function zoomTo(idx){
   idx=Math.max(0,Math.min(MAX_LEVEL,idx));
   levelIdx=idx;
-  const W=document.getElementById('canvas').clientWidth;
-  const H=document.getElementById('canvas').clientHeight;
-  /* scale relative to the fit scale so the graph always looks right-sized */
-  const targetScale=fitScale*LEVELS[idx].mult;
-  const t=d3.zoomIdentity.translate(W/2,H/2).scale(targetScale).translate(-W/2,-H/2)
-    /* re-apply the fit translation so centre stays centred */
-    .translate((fitTx-W/2)/targetScale*fitScale+W/2/targetScale-W/2/targetScale,
-               (fitTy-H/2)/targetScale*fitScale+H/2/targetScale-H/2/targetScale);
-
-  /* simpler: just scale from current centre */
-  const curT=d3.zoomTransform(document.getElementById('graph'));
-  const scaleBy=targetScale/curT.k;
-  d3.select('#graph').transition().duration(480)
-    .call(zb.scaleBy, scaleBy);
-
-  applyLOD();
-  updateUI();
+  const scaleBy=(fitScale*LEVELS[idx].mult)/currentScale;
+  d3.select('#graph').transition().duration(500).call(zb.scaleBy,scaleBy);
+  applyLOD();updateUI();
 }
 
 function onNodeClick(d){
   if((d.depth??0)>md())return;
-  selected=d;
-  highlightNbhd(d);
-  showPanel(d);
+  selected=d;highlightNbhd(d);showPanel(d);
 }
 
 function highlightNbhd(d){
-  const cids=new Set([d.id]);
-  const ceidx=new Set();
+  const cids=new Set([d.id]),ceidx=new Set();
   simEdges.forEach((e,i)=>{
     if(e.source.id===d.id||e.target.id===d.id){cids.add(e.source.id);cids.add(e.target.id);ceidx.add(i);}
   });
@@ -367,7 +385,7 @@ function highlightNbhd(d){
   nsel.style('opacity',n=>(n.depth??0)>cur?0:cids.has(n.id)?1:.1);
   esel.style('opacity',(e,i)=>{
     if((e.source.depth??0)>cur||(e.target.depth??0)>cur)return 0;
-    return ceidx.has(i)?Math.min(1,(EOP[e.confidence]||EOP.medium)*4):(EOP[e.confidence]||EOP.medium)*.15;
+    return ceidx.has(i)?Math.min(1,(EOP[e.confidence]||EOP.medium)*4):(EOP[e.confidence]||EOP.medium)*.12;
   });
 }
 
@@ -377,26 +395,36 @@ function showPanel(d){
   document.getElementById('panel').classList.remove('collapsed');
   const badge=document.getElementById('pbadge');
   badge.textContent=d.type;badge.style.background=lcol(d.type);badge.style.color=col(d.type);
-  document.getElementById('pdepth').textContent=DL[d.depth??0]||'';
+
+  const originLabel=d.origin==='natalia'?'your idea':d.origin==='chatgpt'?'introduced by chatgpt':'';
+  const centralityLabel=d.centrality?` · ${d.centrality}`:'';
+  document.getElementById('porigin').textContent=originLabel+centralityLabel;
   document.getElementById('plabel').textContent=d.label;
   document.getElementById('pdesc').textContent=d.description||'No description yet.';
+
+  const met=document.getElementById('pmetaphor');
+  if(d.metaphor){met.textContent=d.metaphor;met.style.display='block';}
+  else{met.style.display='none';}
+
   const cur=md();
   const conns=simEdges.filter(e=>e.source.id===d.id||e.target.id===d.id);
   const cd=document.getElementById('pconns');
   cd.innerHTML='';
-  if(!conns.length){cd.innerHTML='<div class="pdesc" style="color:var(--text3)">No connections yet.</div>';}
-  else conns.forEach(e=>{
-    const other=e.source.id===d.id?e.target:e.source;
-    const vis=(other.depth??0)<=cur;
-    const dir=e.source.id===d.id?'→':'←';
-    const el=document.createElement('div');
-    el.className='ci'+(vis?' live':'');
-    el.innerHTML=`<div class="cdot" style="background:${col(other.type)};opacity:${vis?1:.3}"></div>
-      <div><div class="clabel" style="opacity:${vis?1:.4}">${dir} ${other.label}</div>
-      <div class="crel">${e.relation.replace(/-/g,' ')}</div>
-      ${!vis?'<div class="chint">zoom in to reveal</div>':''}</div>`;
-    cd.appendChild(el);
-  });
+  if(!conns.length){
+    cd.innerHTML='<div class="pdesc" style="color:var(--text3)">No connections yet.</div>';
+  } else {
+    conns.forEach(e=>{
+      const other=e.source.id===d.id?e.target:e.source;
+      const vis=(other.depth??0)<=cur;
+      const el=document.createElement('div');
+      el.className='conn-item';
+      const sent=e.sentence||`${e.source.label||e.source} ${e.relation.replace(/-/g,' ')} ${e.target.label||e.target}.`;
+      el.innerHTML=`<div class="conn-sent" style="opacity:${vis?1:.4}">${sent}</div>`
+        +(!vis?'<div class="conn-hint">zoom in to reveal this node</div>':'');
+      cd.appendChild(el);
+    });
+  }
+
   const srcs=(d.sources||[]).filter(s=>s!=='seed');
   document.getElementById('psrc').style.display=srcs.length?'block':'none';
   document.getElementById('psrct').textContent=srcs.join(', ');
